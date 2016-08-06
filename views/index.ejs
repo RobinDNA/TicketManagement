@@ -1,70 +1,67 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>LeanEngine</title>
+    <title>优惠券/码列表</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
 	<script src="/js/masonry.pkgd.min.js"></script>
 	<script src="/js/jquery.mobile-1.4.5.min.js"></script>
-
 	<script type="text/javascript">
-		var id = "gallerycontent" + Guid.NewGuid();
         $(document).on("pagechange", function (event) {
-            $("#@id").masonry({
+            $("#<%= masonryContentId %>").masonry({
                 itemSelector: ".post",
                 isFitWidth: true
             });
         });		
-		$("#@id").fadeTo(0, 0);
+		$("#<%= masonryContentId %>").fadeTo(0, 0);
         $(document).on("pagechange", function (event) {
-            $("#@id").masonry({
+            $("#<%= masonryContentId %>").masonry({
                 itemSelector: ".post",
                 isFitWidth: true
             });
-            $("#@id").fadeTo(0, 1);
+            $("#<%= masonryContentId %>").fadeTo(0, 1);
         });
-
     </script>
   </head>
   <body>
-<!--    <h1>LeanEngine</h1>
+ <!--<h1>优惠券/码列表</h1>
     <p>这是 LeanEngine 的示例应用</p>
     <p>当前时间：<%= currentTime %></p>
     <p><a href="/todos">一个简单的「TODO 列表」示例</a></p>
 	-->
-	<div id="@id" style="margin: 50px auto;" class="js-masonry" data-masonry-options='{ "isFitWidth": true, "itemSelector": ".post" }'>
+	<form action="/todos" method="POST">
+	<div id="<%= masonryContentId %>" style="margin: 15px auto;" class="js-masonry" data-masonry-options='{ "isFitWidth": true, "itemSelector": ".post" }'>
 
-		<div class="post" style="height:257px">
+		<div class="post" style="height:277px">
 				 <a data-ajax="true" href="/images/t1.jpg"><img src="/images/t1.jpg" width="260" /></a>
 		</div>
 
-		<div class="post" style="height:257pxpx">
+		<div class="post" style="height:277px">
 				 <a data-ajax="true" href="/images/t2.jpg"><img src="/images/t2.jpg" width="260" /></a>
 		</div>
-		<!--
-		<div class="post" style="height:257pxpx">
+		<div class="post" style="height:277px">
 				 <a data-ajax="true" href="/images/t3.jpg"><img src="/images/t3.jpg" width="260" /></a>
 		</div>
 
-		<div class="post" style="height:257pxpx">
+		<div class="post" style="height:277px">
 				 <a data-ajax="true" href="/images/t4.jpg"><img src="/images/t4.jpg" width="260" /></a>
 		</div>
 		
-		<div class="post" style="height:257pxpx">
+		<div class="post" style="height:277pxpx">
 				 <a data-ajax="true" href="/images/t5.jpg"><img src="/images/t5.jpg" width="260" /></a>
 		</div>
 
-		<div class="post" style="height:257pxpx">
+		<div class="post" style="height:277px">
 				 <a data-ajax="true" href="/images/t6.jpg"><img src="/images/t6.jpg" width="260" /></a>
 		</div>
 
-		<div class="post" style="height:257pxpx">
+		<div class="post" style="height:277px">
 				 <a data-ajax="true" href="/images/t7.jpg"><img src="/images/t7.jpg" width="260" /></a>
 		</div>
 
-		<div class="post" style="height:257pxpx">
+		<div class="post" style="height:277px">
 				 <a data-ajax="true" href="/images/t8.jpg"><img src="/images/t8.jpg" width="260" /></a>
 		</div>
-		-->
 	</div>
+	</form>
   </body>
 </html>

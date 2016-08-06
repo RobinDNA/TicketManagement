@@ -28,9 +28,33 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+/*
+        * 功能: 为一位数的正整数前面添加0，如果是可以转成非NaN数字的字符串也可以实现
+        * 参数: 参数表示准备再前面添加0的数字或可以转换成数字的字符串
+        * 返回值: 如果符合条件，返回添加0后的字条串类型，否则返回自身的字符串
+        */
+
+function addZero(num) {
+    if (Number(num).toString() != 'NaN' && num >= 0 && num < 10) {
+        return '0' + Math.floor(num);
+    } else {
+        return num.toString();
+    }
+};
+var date = new Date();
+
 app.get('/', function(req, res) {
-  res.render('index', { currentTime: new Date() });
-});
+    res.render('index', { 
+        currentTime: new Date(),
+        masonryContentId: date.getFullYear()        
+                        + addZero(date.getMonth() + 1)
+                        + addZero(date.getDay())
+                        + addZero(date.getHours())
+                        + addZero(date.getMinutes())
+                        + addZero(date.getSeconds())
+                        + addZero((parseInt(date.getMilliseconds() / 10)))
+                        });
+        });
 
 // 可以将一类的路由单独保存在一个文件中
 app.use('/todos', todos);
