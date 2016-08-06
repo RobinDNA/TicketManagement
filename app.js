@@ -4,7 +4,11 @@ var timeout = require('connect-timeout');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
 var todos = require('./routes/todos');
+var login = require('./routes/login');
+
+
 var AV = require('leanengine');
 
 var app = express();
@@ -23,6 +27,14 @@ app.use(timeout('15s'));
 require('./cloud');
 // 加载云引擎中间件
 app.use(AV.express());
+
+// 加载 cookieSession 以支持 AV.User 的会话状态
+app.use(AV.Cloud.CookieSession({ secret: '05XgTktKPMkU', maxAge: 3600000, fetchUser: true }));
+
+// 强制使用 https
+app.enable('trust proxy');
+app.use(AV.Cloud.HttpsRedirect());
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -58,6 +70,7 @@ app.get('/', function(req, res) {
 
 // 可以将一类的路由单独保存在一个文件中
 app.use('/todos', todos);
+app.use('/login', login);
 
 app.use(function(req, res, next) {
   // 如果任何一个路由都没有返回响应，则抛出一个 404 异常给后续的异常处理器

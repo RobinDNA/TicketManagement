@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="/js/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+    <form action="/Login" method="POST">
+        <div data-role="fieldcontain">
+			<div data-role="content">
+            <label for="fullname">手机号：</label>
+            <input type="text" name="fullname" id="fullname">
+			</div>
+
+			<div data-role="content">
+            <label for="email">电子邮箱：</label>
+            <input type="email" name="email" id="email" placeholder="您的邮件地址..">
+			</div>
+
+			<div data-role="content">
+            <label for="bday">密码：</label>
+            <input type="password" name="iptPassword" id="userPassword">
+			</div>
+
+			<div data-role="content">
+            <label for="bday">密码：</label>
+            <input type="password" name="iptPasswordAgain" id="userPasswordAgain">
+			</div>
+
+			<div data-role="content">
+            <label for="bday">短信验证码：</label>
+            <input type="text" name="iptPasswordAgain" id="userPasswordAgain" placeholder="请输入短信验证码。">
+			</div>
+
+            <div data-role="content">
+                <button>注册</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
