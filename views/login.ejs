@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Login</title>
+    <title>登录</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
     <script src="/js/jquery.mobile-1.4.5.min.js"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
 </head>
 <body>
-    <form action="/Login" method="POST" class="form-horizontal">
+    <form action="/login" method="POST" class="form-horizontal">
         <div class="control-group">
             <label class="control-label" for="inputCellphoneNum">手机号：</label>
             <div class="controls">
@@ -22,13 +22,11 @@
                 <input type="password" name="inputPassword" placeholder="密 码">
             </div>
         </div>
-        <div class="form-horizontal">
-        </div>
         <div class="control-group">
 			<label class="control-label"></label>
             <div class="controls">
-                <button type="submit" class="btn" id="btnLogin">登 录</button>
-                <button type="submit" class="btn" id="btnRegister">注 册</button>
+                <button type="submit" class="btn" name="btnVote" value="login">登 录</button>
+                <button type="submit" class="btn" name="btnVote" value="register">注 册</button>
             </div>
         </div>
     </form>
