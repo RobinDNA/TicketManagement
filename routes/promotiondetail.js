@@ -26,19 +26,17 @@ router.post('/', function (req, res, next) {
 
     var vote = req.body.btnVote;
 
-    if (vote == 'sendSmsCode')
-    {
+    if (vote == 'sendSmsCode') {
         //发送短信
         res.render('register', { 'cellphoneNum': cellphoneNum });
     }
-    else if (vote == 'register')
-    {
+    else if (vote == 'register') {
         //注册逻辑
 
         //注册成功
         res.redirect('/promotiondetail?p1=' + promotionId);
     }
-    
+
 });
 
 module.exports = router;
