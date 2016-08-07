@@ -4,6 +4,7 @@ var timeout = require('connect-timeout');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var multer = require('multer');
 
 var todos = require('./routes/todos');
 var login = require('./routes/login');
@@ -35,10 +36,10 @@ app.use(AV.Cloud.CookieSession({ secret: '05XgTktKPMkU', maxAge: 3600000, fetchU
 app.enable('trust proxy');
 app.use(AV.Cloud.HttpsRedirect());
 
-
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(multer());
 
 /*
         * 功能: 为一位数的正整数前面添加0，如果是可以转成非NaN数字的字符串也可以实现

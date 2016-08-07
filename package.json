@@ -19,7 +19,8 @@
     "cookie-parser": "^1.4.3",
     "ejs": "^2.3.1",
     "express": "^4.12.3",
-    "leanengine": "^1.2.0"
+    "leanengine": "^1.2.0",
+    "multer": "^0.1.8"
   },
   "engines": {
     "node": "4.x"

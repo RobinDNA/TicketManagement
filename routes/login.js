@@ -6,19 +6,34 @@ var AV = require('leanengine');
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
 var TicketUser = AV.Object.extend('TicketUser');
 
-router.post('/', function (req, res, next) {
-        res.render('login', {
-            title: 'TODO 列表',
-            todos: false
-        });
-});
+var promotionId = null;
 
 router.get('/', function (req, res, next) {
+    console.log('p1:' + req.query.p1);
+    promotionId = req.query.p1;    
+    res.render('login', null);
+});
+
+router.post('/', function (req, res, next) {
+
+    console.log('req:' + req.body);
+    console.log('req.body.inputCellphoneNum:' + req.body.inputCellphoneNum);
+    console.log('req.body.inputPassword:' + req.body.inputPassword);
+
+    var cellphoneNum = req.body.inputCellphoneNum;
+    var userPassword = req.body.inputPassword;
+        
+    console.log("cellphoneNum:"+ cellphoneNum);
+    console.log("userPassword:"+ userPassword);
+    
+
     res.render('login', {
         title: 'TODO 列表',
         todos: false
     });
 });
+
+
 
 // 查询 Todo 列表
 /*
