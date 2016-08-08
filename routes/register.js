@@ -35,6 +35,7 @@ router.post('/', function (req, res, next) {
             console.log('向手机' + cellphoneNum + '发送验证码短信成功。');
         }, function (err) {
             //发送失败
+            console.log('向手机' + cellphoneNum + '发送验证码短信失败。' + JSON.stringify(err));
         });
         res.render('register', { 'cellphoneNum': cellphoneNum });
     }
