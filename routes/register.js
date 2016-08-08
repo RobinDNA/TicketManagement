@@ -30,9 +30,9 @@ router.post('/', function (req, res, next) {
     if (vote == 'sendSmsCode')
     {
         //发送短信
-        AV.User.requestMobilePhoneVerify(cellphoneNum).then(function () {
+        AV.User.requestSmsCode(cellphoneNum).then(function () {
             //发送成功
-            console.log('向手机'+ cellphoneNum +'发送短信成功。');
+            console.log('向手机' + cellphoneNum + '发送验证码短信成功。');
         }, function (err) {
             //发送失败
         });
@@ -41,9 +41,18 @@ router.post('/', function (req, res, next) {
     else if (vote == 'register')
     {
         //注册逻辑
-
+        var user = new AV.User();
+        user.set("username", cellphoneNum);
+        user.set("password", userPassword);
+        user.signUp().then(function (user) {
+        res.saveCurrentUser(user);
         //注册成功
         res.redirect('/promotiondetail?p1=' + promotionId);
+        }, function (err) {
+            res.redirect('/users/register?errMsg=' + JSON.stringify(err));
+        }).catch(next);
+
+        
     }
     
 });
