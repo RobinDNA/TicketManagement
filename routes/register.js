@@ -30,7 +30,7 @@ router.post('/', function (req, res, next) {
     if (vote == 'sendSmsCode')
     {
         //发送短信
-        AV.User.requestSmsCode(cellphoneNum).then(function () {
+        AV.Cloud.requestSmsCode(cellphoneNum).then(function () {
             //发送成功
             console.log('向手机' + cellphoneNum + '发送验证码短信成功。');
         }, function (err) {
