@@ -4,15 +4,16 @@ var AV = require('leanengine');
 
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
-var TicketUser = AV.Object.extend('TicketUser');
 
 var promotionId = null;
 
 router.get('/', function (req, res, next) {
     console.log('current page:login.ejs');
     console.log('p1:' + req.query.p1);
-    promotionId = req.query.p1;    
-    res.render('login', null);
+    promotionId = req.query.p1;
+    var errMsg = req.query.errMsg;
+
+    res.render('login', {errMsg: errMsg});
 });
 
 router.post('/', function (req, res, next) {
@@ -26,11 +27,27 @@ router.post('/', function (req, res, next) {
     if (vote == 'login') {
         var cellphoneNum = req.body.inputCellphoneNum;
         var userPassword = req.body.inputPassword;
+        var isLoginSuccess = false;
+        //user login
+        AV.User.logIn(cellphoneNum, userPassword).then(function (user) {
+            //login successfully
+            res.saveCurrentUser(user);
 
-        if (cellphoneNum == '13988888888') {
-            res.redirect('/usersmanagement');
-        }
+            //if user is adminstrator 
+            if (cellphoneNum == '13988888888') {
+                res.redirect('/usersmanagement');
+            }
 
+        }, function (err) {
+            if(promotionId != null)
+            {
+                res.redirect('/login?p1='+promotionId+'&errMsg=' + JSON.stringify(err));
+            }
+            else
+            {
+                res.redirect('/login?errMsg=' + JSON.stringify(err));
+            }
+        }).catch(next);
     }
     else {
         res.redirect('/register?p1=' + promotionId);

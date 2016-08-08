@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
 </head>
 <body>
+<% if(errMsg!=null) {%>
+	<div class="form-group has-error">
+            <label class="control-label" for="inputWarning1"><%= errMsg %></label>
+    </div>
+<% } %>
+
     <form action="/login" method="POST" class="form-horizontal">
         <div class="control-group">
             <label class="control-label" for="inputCellphoneNum">手机号：</label>

@@ -30,6 +30,12 @@ router.post('/', function (req, res, next) {
     if (vote == 'sendSmsCode')
     {
         //发送短信
+        AV.User.requestMobilePhoneVerify(cellphoneNum).then(function () {
+            //发送成功
+            console.log('向手机'+ cellphoneNum +'发送短信成功。');
+        }, function (err) {
+            //发送失败
+        });
         res.render('register', { 'cellphoneNum': cellphoneNum });
     }
     else if (vote == 'register')
