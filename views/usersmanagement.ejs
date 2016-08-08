@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>优惠券/码列表</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="/js/masonry.pkgd.min.js"></script>
+    <script src="/js/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">    
+</head>
+<body>
+    <form action="/register" method="POST" class="form-horizontal">        
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>公司名称</th>
+                        <th>组织机构代码</th>
+                        <th>手机号</th>
+						<td>是服务商</td>
+                        <th>状态</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tr class="warning">
+                    <td>1</td>
+                    <td>京东上海有限公司</td>
+                    <td>53624356</td>
+                    <td>13988888888</td>
+					<td>13988888888</td>
+                    <td>申请中</td>
+                    <td><button type="submit" name="btnVote" value="sendSmsCode">发送</button></td>
+                </tr>
+                <tr class="success">
+                    <td>2</td>
+                    <td>京东上海有限公司2</td>
+                    <td>53624356</td>
+                    <td>13922222222</td>
+                    <td>会员</td>
+                    <td></td>
+                </tr>
+                <tr class="success">
+                    <td>2</td>
+                    <td>京东上海有限公司2</td>
+                    <td>53624356</td>
+                    <td>13933333333</td>
+                    <td>会员</td>
+                    <td></td>
+                </tr>
+            </table>
+    </form>
+</body>
+</html>

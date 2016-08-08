@@ -12,8 +12,8 @@
     <form action="/register" method="POST" class="form-horizontal">
         <div class="control-group">
             <label class="control-label">手机号：</label>
-            <div>
-                <input type="text" class="input-small" name="inputCellphoneNum" placeholder="手机号" value="<%= cellphoneNum %>"><button type="submit" name="btnVote" value="sendSmsCode">发送</button>
+            <div class="input-append">
+                <input type="text" class="span2" name="inputCellphoneNum" placeholder="手机号" value="<%= cellphoneNum %>"><button type="submit" name="btnVote" value="sendSmsCode">发送</button>
             </div>
         </div>
         <div class="control-group">
@@ -32,6 +32,12 @@
             <label class="control-label">再密码：</label>
             <div class="controls">
                 <input type="password" name="inputPasswordAgain" placeholder="再次输入密码">
+            </div>
+        </div>
+		<div class="control-group">
+            <label class="control-label">公司名称：</label>
+            <div class="controls">
+                <input type="text" name="inputCompanyName" placeholder="公司名称">
             </div>
         </div>
         <div class="control-group">

@@ -5,38 +5,33 @@ var AV = require('leanengine');
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
 var promotionId = null;
+var promotionCode = null;
+var cellphoneNum = null;
 
 router.get('/', function (req, res, next) {
     console.log('p1:' + req.query.p1);
     promotionId = req.query.p1;
-    res.render('register', { 'cellphoneNum': '' });
+    //retrieve promotion detail information from database
+    var promotionTitle = '试用激活码';
+    var promotionContent = '此激活码有效期至2016年12月31日。';
+    var cellphoneNum = '18930615208';
+
+    res.render('promotiondetail', {
+        'promotionId': promotionId,
+        'promotionTitle': promotionTitle,
+        'promotionContent': promotionContent
+    });
 });
 
 router.post('/', function (req, res, next) {
-    console.log('current page:register.ejs');
+
+    console.log('current page:promotiondetail.ejs');
     console.log('req:' + req.body);
-    console.log('req.body.inputCellphoneNum:' + req.body.inputCellphoneNum);
-    console.log('req.body.inputPassword:' + req.body.inputPassword);
-    console.log('promotionId:' + promotionId);
-
-    var cellphoneNum = req.body.inputCellphoneNum;
-    var userPassword = req.body.inputPassword;
-    var email = req.body.inputEmail;
-    var organizationCode = req.body.inputOrganizationCode;
-
-    var vote = req.body.btnVote;
-
-    if (vote == 'sendSmsCode') {
-        //发送短信
-        res.render('register', { 'cellphoneNum': cellphoneNum });
-    }
-    else if (vote == 'register') {
-        //注册逻辑
-
-        //注册成功
-        res.redirect('/promotiondetail?p1=' + promotionId);
-    }
-
+    
+     //发送短信
+    //todo
+    
+    res.redirect('/');
 });
 
 module.exports = router;

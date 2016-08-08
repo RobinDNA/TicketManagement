@@ -1,1 +1,31 @@
-﻿
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>注册</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="/js/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+</head>
+<body>
+    <form action="/promotiondetail" method="POST" class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label">优惠券/码 细则：</label>
+            <div>
+                <ul class="unstyled">
+                    <li><%= promotionTitle %></li>
+                    <li><%= promotionContent %></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label"></label>
+            <div class="controls">
+                <button type="submit" class="btn" name="btnSendSms" value="sendSms">发送优惠券/码</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

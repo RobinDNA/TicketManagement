@@ -27,8 +27,8 @@ router.post('/', function (req, res, next) {
         var cellphoneNum = req.body.inputCellphoneNum;
         var userPassword = req.body.inputPassword;
 
-        if (cellphoneNum == 'admin') {
-
+        if (cellphoneNum == '13988888888') {
+            res.redirect('/usersmanagement');
         }
 
     }

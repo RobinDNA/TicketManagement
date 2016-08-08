@@ -1,56 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>注册</title>
+    <title>优惠券/码列表</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="/js/masonry.pkgd.min.js"></script>
     <script src="/js/jquery.mobile-1.4.5.min.js"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <script type="text/javascript">
+        $(document).on("pagechange", function (event) {
+            $("#<%= masonryContentId %>").masonry({
+                itemSelector: ".post",
+                isFitWidth: true
+            });
+        });
+        $("#<%= masonryContentId %>").fadeTo(0, 0);
+        $(document).on("pagechange", function (event) {
+            $("#<%= masonryContentId %>").masonry({
+                itemSelector: ".post",
+                isFitWidth: true
+            });
+            $("#<%= masonryContentId %>").fadeTo(0, 1);
+        });
+    </script>
 </head>
 <body>
     <form action="/register" method="POST" class="form-horizontal">
-        <div class="control-group">
-            <label class="control-label">手机号：</label>
-            <div>
-                <input type="text" class="input-small" name="inputCellphoneNum" placeholder="手机号" value="<%= cellphoneNum %>"><button type="submit" name="btnVote" value="sendSmsCode">发送</button>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">验证码：</label>
-            <div class="controls">
-                <input type="text" name="inputOrganizationCode" placeholder="手机收到的验证码">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">密 码：</label>
-            <div class="controls">
-                <input type="password" name="inputPassword" placeholder="密 码">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">再密码：</label>
-            <div class="controls">
-                <input type="password" name="inputPasswordAgain" placeholder="再次输入密码">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Email：</label>
-            <div class="controls">
-                <input type="text" name="inputEmail" placeholder="Email">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">机构代码：</label>
-            <div class="controls">
-                <input type="text" name="inputOrganizationCode" placeholder="机构代码">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label"></label>
-            <div class="controls">
-                <button type="submit" class="btn" name="btnVote" value="register">注 册</button>
-            </div>
+        <div id="<%= masonryContentId %>" style="margin: 15px auto;" class="js-masonry" data-masonry-options='{ "isFitWidth": true, "itemSelector": ".post" }'>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>公司名称</th>
+                        <th>组织机构代码</th>
+                        <th>手机号</th>
+                        <th>状态</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tr class="warning">
+                    <td>1</td>
+                    <td>京东上海有限公司</td>
+                    <td>53624356</td>
+                    <td>13988888888</td>
+                    <td>申请中</td>
+                    <td><button type="submit" name="btnVote" value="sendSmsCode">发送</button></td>
+                </tr>
+                <tr class="success">
+                    <td>2</td>
+                    <td>京东上海有限公司2</td>
+                    <td>53624356</td>
+                    <td>13922222222</td>
+                    <td>会员</td>
+                    <td></td>
+                </tr>
+                <tr class="success">
+                    <td>2</td>
+                    <td>京东上海有限公司2</td>
+                    <td>53624356</td>
+                    <td>13922222222</td>
+                    <td>会员</td>
+                    <td></td>
+                </tr>
+            </table>
         </div>
     </form>
 </body>
