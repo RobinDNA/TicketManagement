@@ -21,9 +21,10 @@ router.post('/', function (req, res, next) {
 
     var cellphoneNum = req.body.inputCellphoneNum;
     var userPassword = req.body.inputPassword;
+    var verificationCode = req.body.inputVerificationCode;
     var email = req.body.inputEmail;
     var companyName = req.body.inputCompanyName;    
-    var organizationCode = req.body.inputOrganizationCode;
+    var organizationCode = req.body.inputOrganizationCode;    
 
     var vote = req.body.btnVote;
 
@@ -41,18 +42,26 @@ router.post('/', function (req, res, next) {
     }
     else if (vote == 'register')
     {
-        //注册逻辑
-        var user = new AV.User();
-        user.set("username", cellphoneNum);
-        user.set("password", userPassword);
-        user.signUp().then(function (user) {
-        res.saveCurrentUser(user);
-        //注册成功
-        res.redirect('/promotiondetail?p1=' + promotionId);
-        }, function (err) {
-            res.redirect('/users/register?errMsg=' + JSON.stringify(err));
-        }).catch(next);
+        AV.Cloud.verifySmsCode(cellphoneNum, verificationCode).then(function (success) {
+            //验证码正确
 
+            //注册逻辑
+            var user = new AV.User();
+            user.set("username", cellphoneNum);
+            user.set("password", userPassword);
+            user.set("CompanyName", companyName);
+            user.set("OrganizationCode", organizationCode);
+            user.signUp().then(function (user) {
+                res.saveCurrentUser(user);
+                //注册成功
+                res.redirect('/promotiondetail?p1=' + promotionId);
+            }, function (err) {
+                res.redirect('/users/register?errMsg=' + JSON.stringify(err));
+            }).catch(next);
+        }, function (error) {
+            // 验证码错误，验证失败
+            res.redirect('/users/register?errMsg=' + JSON.stringify(err)+ '验证码错误。');
+        });
         
     }
     

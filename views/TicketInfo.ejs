@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>注册</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="/js/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+	<script type="text/javascript">
+		$('input[id=lefile]').change(function() {
+		$('#ticketPhoto').val($(this).val());
+		});
+	</script>
+</head>
+<body>
+    <form action="/ticketinfo" method="POST" class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label">优惠券/码名：</label>
+            <div class="input-append">
+                <input type="text" class="span2" name="inputTicketTitle" placeholder="优惠券/码名">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">优惠券/码细则：</label>
+            <div class="controls">
+                <textarea class="form-control" rows="4" name="inputTicketContent" placeholder="优惠券/码细则"></textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">优惠生效日：</label>
+            <div class="controls">
+                <input type="date" class="form-control" name="inputStartDate" placeholder="生效日" value="">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">优惠截止日：</label>
+            <div class="controls">
+                <input type="date" class="form-control" name="inputEndDate"  placeholder="截止日">
+            </div>
+        </div>
+		<div class="control-group">
+            <label class="control-label">优惠天数：</label>
+            <div class="controls">
+                <input type="number" class="form-control" name="inputTicketDuration"  placeholder="从领取日开始的天数">
+            </div>
+        </div>
+	   <!-- 
+       <div class="control-group">
+            <label class="control-label">优惠范围：</label>
+            <div class="controls">
+                <input type="text" name="inputScope" name="inputTicketScope" placeholder="优惠范围">
+            </div>
+        </div>
+		-->
+		<div class="control-group">
+            <label class="control-label">单个用户优惠券可使用次数：</label>
+            <div class="controls">
+                <input type="number" class="form-control" name="inputNumberOfTimes" placeholder="单个用户优惠券可使用次数">
+            </div>
+        </div>
+		<div class="control-group">
+            <label class="control-label">优惠券图</label>
+            <input type="file" id="fileTicketPhoto" class="file">
+			<p class="help-block">Jpg,png格式，且文件大小不要超过300k。</p>
+			</div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">是否有效：</label>
+            <div class="controls">
+                <input type="checkbox" name="inputTicketStatus"  value="option1" aria-label="...">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label"></label>
+            <div class="controls">
+                <button type="submit" class="btn" name="btnCreate" value="create">创建</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

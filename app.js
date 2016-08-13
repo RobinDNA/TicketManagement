@@ -11,6 +11,7 @@ var login = require('./routes/login');
 var register = require('./routes/register');
 var promotiondetail = require('./routes/promotiondetail');
 var usersmanagement = require('./routes/usersmanagement');
+var ticketinfo = require('./routes/ticketinfo');
 
 
 var AV = require('leanengine');
@@ -78,6 +79,7 @@ app.use('/login', login);
 app.use('/register', register);
 app.use('/promotiondetail', promotiondetail);
 app.use('/usersmanagement', usersmanagement);
+app.use('/ticketinfo', ticketinfo);
 
 app.use(function(req, res, next) {
   // 如果任何一个路由都没有返回响应，则抛出一个 404 异常给后续的异常处理器
