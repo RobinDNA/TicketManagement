@@ -34,20 +34,20 @@ router.post('/', function (req, res, next) {
 
     var vote = req.body.btnVote;
 
-    //if (vote == 'sendSmsCode') {
-    //    //发送短信
-    //    AV.Cloud.requestSmsCode(cellphoneNum).then(function () {
-    //        //发送成功
-    //        console.log('向手机' + cellphoneNum + '发送验证码短信成功。');
-    //    }, function (err) {
-    //        //发送失败
-    //        console.log('向手机' + cellphoneNum + '发送验证码短信失败。' + JSON.stringify(err));
-    //    });
-    //    res.render('register', { 'cellphoneNum': cellphoneNum });
-    //}
-    //else if (vote == 'register') {
-    //    console.log('进入注册');
-    //    AV.Cloud.verifySmsCode(verificationCode, cellphoneNum).then(function () {
+    if (vote == 'sendSmsCode') {
+        //发送短信
+        AV.Cloud.requestSmsCode(cellphoneNum).then(function () {
+            //发送成功
+            console.log('向手机' + cellphoneNum + '发送验证码短信成功。');
+        }, function (err) {
+            //发送失败
+            console.log('向手机' + cellphoneNum + '发送验证码短信失败。' + JSON.stringify(err));
+        });
+        res.render('register', { 'cellphoneNum': cellphoneNum });
+    }
+    else if (vote == 'register') {
+        console.log('进入注册');
+        AV.Cloud.verifySmsCode(verificationCode, cellphoneNum).then(function () {
             //验证码正确
             console.log('验证码校验正确。');
             //注册逻辑
@@ -66,14 +66,14 @@ router.post('/', function (req, res, next) {
                 var errMsg = '注册失败:' + err.code + ' : ' + err.message;
                 res.render('/register', { 'errMsg': errMsg });
             }).catch(next);
-        //}, function (error) {
-        //    // 验证码错误，验证失败
-        //    console.log('验证码错误');
-        //    res.render('/register', { 'errMsg': JSON.stringify(error) + '验证码错误。' });
-        //    }
-        //    );
+        }, function (error) {
+            // 验证码错误，验证失败
+            console.log('验证码错误');
+            res.render('/register', { 'errMsg': JSON.stringify(error) + '验证码错误。' });
+            }
+            );
 
-    //}
+    }
 
 });
 
