@@ -13,6 +13,7 @@ var promotiondetail = require('./routes/promotiondetail');
 var usersmanagement = require('./routes/usersmanagement');
 var ticketinfo = require('./routes/ticketinfo');
 var ticketlist = require('./routes/ticketlist');
+var tickethistory = require('./routes/tickethistory');
 
 
 var AV = require('leanengine');
@@ -46,6 +47,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer());
 
+// 加载 cookieSession 以支持 AV.User 的会话状态
+//app.use(AV.Cloud.CookieSession({ secret: 'cloud secret', maxAge: 3600000, fetchUser: true }));
+
 /*
         * 功能: 为一位数的正整数前面添加0，如果是可以转成非NaN数字的字符串也可以实现
         * 参数: 参数表示准备再前面添加0的数字或可以转换成数字的字符串
@@ -61,18 +65,18 @@ function addZero(num) {
 };
 var date = new Date();
 
-app.get('/', function(req, res) {
-    res.render('index', { 
-        currentTime: new Date(),
-        masonryContentId: date.getFullYear()        
+app.get('/', function (req, res) {
+    res.locals.currentTime = new Date();
+    res.locals.masonryContentId = date.getFullYear()        
                         + addZero(date.getMonth() + 1)
                         + addZero(date.getDay())
                         + addZero(date.getHours())
                         + addZero(date.getMinutes())
                         + addZero(date.getSeconds())
-                        + addZero((parseInt(date.getMilliseconds() / 10)))
-                        });
-        });
+                        + addZero((parseInt(date.getMilliseconds() / 10)));
+
+    res.render('index', {});
+});
 
 // 可以将一类的路由单独保存在一个文件中
 app.use('/todos', todos);
@@ -81,6 +85,8 @@ app.use('/register', register);
 app.use('/promotiondetail', promotiondetail);
 app.use('/usersmanagement', usersmanagement);
 app.use('/ticketinfo', ticketinfo);
+app.use('/ticketlist', ticketlist);
+app.use('/tickethistory', tickethistory);
 
 app.use(function(req, res, next) {
   // 如果任何一个路由都没有返回响应，则抛出一个 404 异常给后续的异常处理器
