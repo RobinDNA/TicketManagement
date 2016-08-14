@@ -7,9 +7,18 @@ var AV = require('leanengine');
 var promotionId = null;
 
 router.get('/', function (req, res, next) {
+    console.log('current page: usersmanagement.ejs');
     console.log('p1:' + req.query.p1);
     promotionId = req.query.p1;
-    res.render('usersmanagement', { 'cellphoneNum': '' });
+    //尝试获取session中的user，如果存在，说明已登录，直接使用
+    if (req.currentUser) {
+        // 如果已经登录，发送当前登录用户信息。 
+        res.render('usersmanagement', { 'cellphoneNum': '' });
+    } else {
+        // 没有登录，跳转到登录页面。
+        res.redirect('/login');
+    }
+    //res.render('usersmanagement', { 'cellphoneNum': '' });
 });
 
 router.post('/', function (req, res, next) {
@@ -26,7 +35,7 @@ router.post('/', function (req, res, next) {
 
     if (vote == 'sendSmsCode') {
         //发送短信
-        res.render('usersmanagement', { 'cellphoneNum': cellphoneNum });
+        res.render('usersmanagement', null);
     }
     else if (vote == 'register') {
         //注册逻辑

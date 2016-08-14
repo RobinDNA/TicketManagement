@@ -12,6 +12,7 @@ var register = require('./routes/register');
 var promotiondetail = require('./routes/promotiondetail');
 var usersmanagement = require('./routes/usersmanagement');
 var ticketinfo = require('./routes/ticketinfo');
+var ticketlist = require('./routes/ticketlist');
 
 
 var AV = require('leanengine');

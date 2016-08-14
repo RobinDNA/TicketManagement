@@ -8,14 +8,26 @@
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">    
 </head>
 <body>
-    <form action="/register" method="POST" class="form-horizontal">        
+	<nav class="navbar navbar-default navbar-fixed-bottom">
+	  <div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="collapse navbar-collapse">		  
+		  <ul class="nav navbar-nav">
+			<li><a href="/usersmanagement">用户管理</a></li>
+			<li><a href="/ticketlist">优惠券管理</a></li>
+			<li><a href="/tickethistory">券码统计</a></li>
+		  </ul>
+		</div>		
+	  </div><!-- /.container-fluid -->
+	</nav>
+    <form action="/ticketlist" method="POST" class="form-horizontal">        
             <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>优惠码/券名</th>                        
                         <th>开始日期</th>
-						<td>结束日期</td>
+						<th>结束日期</th>
                         <th>有效时长</th>
 						<th>状态</th>
                         <th>详细</th>
@@ -40,7 +52,52 @@
 					<td><button type="submit" name="btnVote" value="sendSmsCode">编辑</button><button type="submit" name="btnVote" value="sendSmsCode">失效</button></td>
                 </tr>
                 <tr class="success">
-                    <td>2</td>
+                    <td>3</td>
+                    <td>满2000送1100</td>
+                    <td>2016-6-10</td>
+                    <td>2016-7-10</td>
+                    <td></td>
+                    <td>有效</td>
+					<td><button type="submit" name="btnVote" value="sendSmsCode">编辑</button><button type="submit" name="btnVote" value="sendSmsCode">失效</button></td>
+                </tr>
+				<tr class="success">
+                    <td>4</td>
+                    <td>满2000送1100</td>
+                    <td>2016-6-10</td>
+                    <td>2016-7-10</td>
+                    <td></td>
+                    <td>有效</td>
+					<td><button type="submit" name="btnVote" value="sendSmsCode">编辑</button><button type="submit" name="btnVote" value="sendSmsCode">失效</button></td>
+                </tr>
+				<tr class="success">
+                    <td>5</td>
+                    <td>满2000送1100</td>
+                    <td>2016-6-10</td>
+                    <td>2016-7-10</td>
+                    <td></td>
+                    <td>有效</td>
+					<td><button type="submit" name="btnVote" value="sendSmsCode">编辑</button><button type="submit" name="btnVote" value="sendSmsCode">失效</button></td>
+                </tr>
+				<tr class="success">
+                    <td>6</td>
+                    <td>满2000送1100</td>
+                    <td>2016-6-10</td>
+                    <td>2016-7-10</td>
+                    <td></td>
+                    <td>有效</td>
+					<td><button type="submit" name="btnVote" value="sendSmsCode">编辑</button><button type="submit" name="btnVote" value="sendSmsCode">失效</button></td>
+                </tr>
+				<tr class="success">
+                    <td>7</td>
+                    <td>满2000送1100</td>
+                    <td>2016-6-10</td>
+                    <td>2016-7-10</td>
+                    <td></td>
+                    <td>有效</td>
+					<td><button type="submit" name="btnVote" value="sendSmsCode">编辑</button><button type="submit" name="btnVote" value="sendSmsCode">失效</button></td>
+                </tr>
+				<tr class="success">
+                    <td>8</td>
                     <td>满2000送1100</td>
                     <td>2016-6-10</td>
                     <td>2016-7-10</td>

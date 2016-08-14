@@ -34,19 +34,19 @@ router.post('/', function (req, res, next) {
             res.saveCurrentUser(user);
 
             //if user is adminstrator 
-            if (cellphoneNum == '13988888888') {
+            if (cellphoneNum == '18930615208') {
                 res.redirect('/usersmanagement');
             }
 
         }, function (err) {
+            var errMsg = err.code + ':' + err.message;
+            res.locals.errMsg = errMsg;
             if(promotionId != null)
             {
-                res.redirect('/login?p1='+promotionId+'&errMsg=' + JSON.stringify(err));
+                res.locals.p1 = promotionId;                
             }
-            else
-            {
-                res.redirect('/login?errMsg=' + JSON.stringify(err));
-            }
+            //res.redirect('/login?p1=' + promotionId + '&errMsg=' + JSON.stringify(err));
+            res.render('login', {});
         }).catch(next);
     }
     else {

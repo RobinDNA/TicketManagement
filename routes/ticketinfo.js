@@ -7,7 +7,15 @@ var AV = require('leanengine');
 
 
 router.get('/', function (req, res, next) {
-    res.render('ticketinfo', null);
+    //尝试获取session中的user，如果存在，说明已登录，直接使用
+    if (req.currentUser) {
+        // 如果已经登录，发送当前登录用户信息。 
+        res.render('ticketinfo', null);
+    } else {
+        // 没有登录，跳转到登录页面。
+        res.redirect('/login');
+    }
+    
 });
 
 router.post('/', function (req, res, next) {

@@ -1744,6 +1744,8 @@
     <Content Include="routes\login.js" />
     <Content Include="routes\promotiondetail.js" />
     <Content Include="routes\register.js" />
+    <Content Include="routes\ticketinfo.js" />
+    <Content Include="routes\ticketlist.js" />
     <Content Include="routes\todos.js" />
     <Content Include="routes\usersmanagement.js" />
     <Content Include="server.js" />
@@ -1753,6 +1755,8 @@
     <Content Include="views\promotiondetail.ejs" />
     <Content Include="views\register.ejs" />
     <Content Include="views\test.html" />
+    <Content Include="views\ticketinfo.ejs" />
+    <Content Include="views\ticketlist.ejs" />
     <Content Include="views\todos.ejs" />
     <Content Include="views\usersmanagement.ejs" />
   </ItemGroup>
