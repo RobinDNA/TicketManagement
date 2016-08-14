@@ -34,7 +34,7 @@ router.post('/', function (req, res, next) {
             res.saveCurrentUser(user);
 
             //if user is adminstrator 
-            if (cellphoneNum == '18930615208') {
+            if (cellphoneNum == '18930615208' || cellphoneNum == '13888888888') {
                 res.redirect('/usersmanagement');
             }
 
