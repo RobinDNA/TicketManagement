@@ -1747,6 +1747,7 @@
     <Content Include="routes\ticketinfo.js" />
     <Content Include="routes\ticketlist.js" />
     <Content Include="routes\todos.js" />
+    <Content Include="routes\tickethistory.js" />
     <Content Include="routes\usersmanagement.js" />
     <Content Include="server.js" />
     <Content Include="views\error.ejs" />
@@ -1758,6 +1759,7 @@
     <Content Include="views\ticketinfo.ejs" />
     <Content Include="views\ticketlist.ejs" />
     <Content Include="views\todos.ejs" />
+    <Content Include="views\tickethistory.ejs" />
     <Content Include="views\usersmanagement.ejs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\$(WMSJSProjectDirectory)\Microsoft.VisualStudio.$(WMSJSProject).targets" />

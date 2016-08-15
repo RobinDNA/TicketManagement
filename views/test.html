@@ -21,6 +21,26 @@
             });
             $("#<%= masonryContentId %>").fadeTo(0, 1);
         });
+
+
+        function registerUser() {
+            var arr = $('#registerForm').serializeArray();
+            $.ajax({
+                url: '/register',
+                data: $.param(arr),
+                type: 'post',
+                dataType: 'text',
+                success: function (msg) {
+                    if (msg == '1') {
+                        console.log('×¢²á³É¹¦');
+                    } else {
+                        console.log('×¢²áÊ§°Ü')
+                    }
+                }
+
+            })
+        }
+
     </script>
 </head>
 <body>

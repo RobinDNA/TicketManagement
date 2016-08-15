@@ -6,12 +6,13 @@ var AV = require('leanengine');
 // Ïê¼û£º https://leancloud.cn/docs/js_guide.html#¶ÔÏó
 
 var promotionId = null;
+var errMsg;
 
 router.get('/', function (req, res, next) {
     console.log('current page:login.ejs');
     console.log('p1:' + req.query.p1);
     promotionId = req.query.p1;
-    var errMsg = req.query.errMsg;
+    errMsg = req.query.errMsg;
 
     res.render('login', {errMsg: errMsg});
 });
@@ -34,7 +35,7 @@ router.post('/', function (req, res, next) {
             res.saveCurrentUser(user);
 
             //if user is adminstrator 
-            if (cellphoneNum == '18930615208' || cellphoneNum == '13888888888') {
+            if (cellphoneNum == '18930615208' || cellphoneNum == '13761787729' || cellphoneNum == '13888888888') {
                 res.redirect('/usersmanagement');
             }
 
