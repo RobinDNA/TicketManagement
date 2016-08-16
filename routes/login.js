@@ -2,19 +2,17 @@
 var router = require('express').Router();
 var AV = require('leanengine');
 
-// `AV.Object.extend` ∑Ω∑®“ª∂®“™∑≈‘⁄»´æ÷±‰¡ø£¨∑Ò‘Úª·‘Ï≥…∂—’ª“Á≥ˆ°£
-// œÍº˚£∫ https://leancloud.cn/docs/js_guide.html#∂‘œÛ
+// `AV.Object.extend` ÊñπÊ≥ï‰∏ÄÂÆöË¶ÅÊîæÂú®ÂÖ®Â±ÄÂèòÈáèÔºåÂê¶Âàô‰ºöÈÄ†ÊàêÂ†ÜÊ†àÊ∫¢Âá∫„ÄÇ
+// ËØ¶ËßÅÔºö https://leancloud.cn/docs/js_guide.html#ÂØπË±°
 
 var promotionId = null;
-var errMsg;
 
 router.get('/', function (req, res, next) {
     console.log('current page:login.ejs');
     console.log('p1:' + req.query.p1);
     promotionId = req.query.p1;
-    errMsg = req.query.errMsg;
 
-    res.render('login', {errMsg: errMsg});
+    res.render('login', {});
 });
 
 router.post('/', function (req, res, next) {
@@ -24,34 +22,38 @@ router.post('/', function (req, res, next) {
     console.log('req.body.inputPassword:' + req.body.inputPassword);
     console.log('promotionId:' + promotionId);
            
-    var vote = req.body.btnVote;
+    var vote = req.query.vote;
+    var isLoginSuccess = null;
+    var locationUrl = null;
     if (vote == 'login') {
         var cellphoneNum = req.body.inputCellphoneNum;
         var userPassword = req.body.inputPassword;
-        var isLoginSuccess = false;
+        isLoginSuccess = false;
+        
         //user login
         AV.User.logIn(cellphoneNum, userPassword).then(function (user) {
             //login successfully
             res.saveCurrentUser(user);
-
+            isLoginSuccess = true;
             //if user is adminstrator 
             if (cellphoneNum == '18930615208' || cellphoneNum == '13761787729' || cellphoneNum == '13888888888') {
-                res.redirect('/usersmanagement');
+                locationUrl = '/usersmanagement';
             }
+            else {
+                locationUrl = '/';
+            }
+            res.json({ isLoginSuccess: isLoginSuccess, locationUrl: locationUrl });
 
         }, function (err) {
+            isLoginSuccess = false;
             var errMsg = err.code + ':' + err.message;
-            res.locals.errMsg = errMsg;
-            if(promotionId != null)
-            {
-                res.locals.p1 = promotionId;                
-            }
-            //res.redirect('/login?p1=' + promotionId + '&errMsg=' + JSON.stringify(err));
-            res.render('login', {});
+            res.json({ isLoginSuccess: isLoginSuccess, errMsg: errMsg });
         }).catch(next);
+        
     }
     else {
-        res.redirect('/register?p1=' + promotionId);
+        locationUrl = '/register';
+        res.json({ isLoginSuccess: isLoginSuccess, locationUrl: locationUrl });
     }
     
 });

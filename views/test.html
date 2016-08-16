@@ -1,87 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>优惠券/码列表</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>登录</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
-    <script src="/js/masonry.pkgd.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
     <script src="/js/jquery.mobile-1.4.5.min.js"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <script type="text/javascript">
-        $(document).on("pagechange", function (event) {
-            $("#<%= masonryContentId %>").masonry({
-                itemSelector: ".post",
-                isFitWidth: true
-            });
-        });
-        $("#<%= masonryContentId %>").fadeTo(0, 0);
-        $(document).on("pagechange", function (event) {
-            $("#<%= masonryContentId %>").masonry({
-                itemSelector: ".post",
-                isFitWidth: true
-            });
-            $("#<%= masonryContentId %>").fadeTo(0, 1);
-        });
-
-
-        function registerUser() {
-            var arr = $('#registerForm').serializeArray();
+        function login(vote) {
+            var arr = $('#loginForm').serializeArray();
             $.ajax({
-                url: '/register',
+                url: '/login?vote=' + vote,
                 data: $.param(arr),
                 type: 'post',
                 dataType: 'text',
                 success: function (msg) {
-                    if (msg == '1') {
-                        console.log('注册成功');
-                    } else {
-                        console.log('注册失败')
-                    }
+                    //if (msg != null) {
+                    //    $('#divError').show();
+                    //    $('#lblErrMsg').text(msg);
+                    //}
+                    //else {
+                    //    window.location.href = '/';
+                    //}
                 }
 
             })
         }
-
     </script>
 </head>
 <body>
-    <form action="/register" method="POST" class="form-horizontal">
-        <div id="<%= masonryContentId %>" style="margin: 15px auto;" class="js-masonry" data-masonry-options='{ "isFitWidth": true, "itemSelector": ".post" }'>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>公司名称</th>
-                        <th>组织机构代码</th>
-                        <th>手机号</th>
-                        <th>状态</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tr class="warning">
-                    <td>1</td>
-                    <td>京东上海有限公司</td>
-                    <td>53624356</td>
-                    <td>13988888888</td>
-                    <td>申请中</td>
-                    <td><button type="submit" name="btnVote" value="sendSmsCode">发送</button></td>
-                </tr>
-                <tr class="success">
-                    <td>2</td>
-                    <td>京东上海有限公司2</td>
-                    <td>53624356</td>
-                    <td>13922222222</td>
-                    <td>会员</td>
-                    <td></td>
-                </tr>
-                <tr class="success">
-                    <td>2</td>
-                    <td>京东上海有限公司2</td>
-                    <td>53624356</td>
-                    <td>13922222222</td>
-                    <td>会员</td>
-                    <td></td>
-                </tr>
-            </table>
+    <div id="divError" class="form-group has-error">
+        <label id="lblErrMsg" class="control-label" for="inputWarning1"></label>
+    </div>
+
+    <form id="loginForm" action="/login" method="POST" class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="inputCellphoneNum">手机号：</label>
+            <div class="controls">
+                <input type="text" name="inputCellphoneNum" placeholder="手机号">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputPassword">密 码：</label>
+            <div class="controls">
+                <input type="password" name="inputPassword" placeholder="密 码">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label"></label>
+            <div class="controls">
+                <button type="button" class="btn" name="btnVote" value="login" onclick="login('login')">登 录</button>
+                <button type="button" class="btn" name="btnVote" value="register" onclick="login('register')">注 册</button>
+            </div>
         </div>
     </form>
 </body>

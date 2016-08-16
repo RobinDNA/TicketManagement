@@ -17,7 +17,7 @@
                 type: 'post',
                 dataType: 'text',
                 success: function (msg) {				
-                    $('#registerForm').show();
+                    $('#divError').show();
 					$('#lblErrMsg').text(msg);
                 }
 
@@ -26,7 +26,6 @@
 	</script>
 </head>
 <body>
-
 	<div id="divError" class="form-group has-error">
             <label id="lblErrMsg" class="control-label" for="inputWarning1"></label>
     </div>

@@ -5,34 +5,59 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>登录</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="/js/jquery.min.js"></script>
     <script src="/js/jquery.mobile-1.4.5.min.js"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <script type="text/javascript">
+        function login(vote) {
+            var arr = $('#loginForm').serializeArray();
+            $.ajax({
+                url: '/login?vote=' + vote,
+                data: $.param(arr),
+                type: 'post',
+                dataType: 'text',
+                complete: function (data) {
+				
+				var jsonData = eval("("+data.responseText+")");
+				console.log(jsonData);
+				console.log(jsonData.isLoginSuccess);
+                if(jsonData.isLoginSuccess == null || jsonData.isLoginSuccess == true) {
+					console.log('redirect to '+ jsonData.locationUrl);
+                    window.location.href = jsonData.locationUrl;
+                }
+                else {                        
+					$('#divError').show();
+                    $('#lblErrMsg').text(jsonData.errMsg);
+                }
+                }
+
+            })
+        }
+    </script>
 </head>
 <body>
-<% if(errMsg!=null) {%>
-	<div class="form-group has-error">
-            <label class="control-label" for="inputWarning1"><%= errMsg %></label>
+    <div id="divError" class="form-group has-error">
+        <label id="lblErrMsg" class="control-label" for="inputWarning1"></label>
     </div>
-<% } %>
 
-    <form action="/login" method="POST" class="form-horizontal">
+    <form id="loginForm" action="/login" method="POST" class="form-horizontal">
         <div class="control-group">
             <label class="control-label" for="inputCellphoneNum">手机号：</label>
             <div class="controls">
                 <input type="text" name="inputCellphoneNum" placeholder="手机号">
             </div>
         </div>
-        <div class="control-group" >
+        <div class="control-group">
             <label class="control-label" for="inputPassword">密 码：</label>
             <div class="controls">
                 <input type="password" name="inputPassword" placeholder="密 码">
             </div>
         </div>
         <div class="control-group">
-			<label class="control-label"></label>
+            <label class="control-label"></label>
             <div class="controls">
-                <button type="submit" class="btn" name="btnVote" value="login">登 录</button>
-                <button type="submit" class="btn" name="btnVote" value="register">注 册</button>
+                <button type="button" class="btn" name="btnVote" value="login" onclick="login('login')">登 录</button>
+                <button type="button" class="btn" name="btnVote" value="register" onclick="login('register')">注 册</button>
             </div>
         </div>
     </form>

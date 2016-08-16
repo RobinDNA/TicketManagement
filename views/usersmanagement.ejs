@@ -5,7 +5,23 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
     <script src="/js/masonry.pkgd.min.js"></script>
     <script src="/js/jquery.mobile-1.4.5.min.js"></script>
-    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">    
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">  
+	<script  type="text/javascript">
+		function registerUser(vote) {
+            var arr = $('#registerForm').serializeArray();			
+            $.ajax({
+                url: '/register?vote='+ vote,
+                data: $.param(arr),
+                type: 'post',
+                dataType: 'text',
+                success: function (msg) {				
+                    $('#registerForm').show();
+					$('#lblErrMsg').text(msg);
+                }
+
+            })
+        }
+	</script>  
 </head>
 <body>
 	<nav class="navbar navbar-default navbar-fixed-bottom">
