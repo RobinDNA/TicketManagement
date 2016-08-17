@@ -1,18 +1,51 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>优惠券/码列表</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
-	<script src="/js/masonry.pkgd.min.js"></script>
-	<script src="/js/jquery.mobile-1.4.5.min.js"></script>
-	<script type="text/javascript">
+    <script src="/js/masonry.pkgd.min.js"></script>
+	<script src="/js/jquery.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+    <script type="text/javascript" src="/js/grayscale.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+		<% 
+		if (ownTickets!= null)
+		{
+			for(var i= 0; i < locals.ownTickets.length; i++)
+            {
+				var ownTicket = locals.ownTickets[i];
+				var ownTicketId = ownTicket.id;
+		%>
+            grayscale(document.getElementById('<%=ownTicketId%>'));
+		<%
+			}
+		}
+		%>
+
+        };
+		
+		function sendTicket(ticketId) {
+            var arr = $('#indexForm').serializeArray();			
+            $.ajax({
+                url: '/?ticketId='+ ticketId,
+                data: $.param(arr),
+                type: 'post',
+                dataType: 'text',
+                success: function (msg) {				
+                    grayscale(document.getElementById(ticketId));
+                }
+
+            })
+        }
+	
         $(document).on("pagechange", function (event) {
             $("#<%= masonryContentId %>").masonry({
                 itemSelector: ".post",
                 isFitWidth: true
             });
-        });		
-		$("#<%= masonryContentId %>").fadeTo(0, 0);
+        });
+        $("#<%= masonryContentId %>").fadeTo(0, 0);
         $(document).on("pagechange", function (event) {
             $("#<%= masonryContentId %>").masonry({
                 itemSelector: ".post",
@@ -20,40 +53,74 @@
             });
             $("#<%= masonryContentId %>").fadeTo(0, 1);
         });
-    </script>
-  </head>
-  <body>
- <!--<h1>优惠券/码列表</h1>
-    <p>这是 LeanEngine 的示例应用</p>
-    <p>当前时间：<%= currentTime %></p>
-    <p><a href="/todos">一个简单的「TODO 列表」示例</a></p>
-	-->
-	<div id="<%= masonryContentId %>" style="margin: 15px auto;" class="js-masonry" data-masonry-options='{ "isFitWidth": true, "itemSelector": ".post" }'>
 
-		<div class="post" style="height:277px">
-				 <a data-ajax="true" href="/login?p1=1"><img src="/images/t1.jpg" width="260" /></a>
-		</div>
-		<div class="post" style="height:277px">
-				 <a data-ajax="true" href="/login?p1=2"><img src="/images/t2.jpg" width="260" /></a>
-		</div>
-		<div class="post" style="height:277px">
-				 <a data-ajax="true" href="/login?p1=3"><img src="/images/t3.jpg" width="260" /></a>
-		</div>
-		<div class="post" style="height:277px">
-				 <a data-ajax="true" href="/login?p1=4"><img src="/images/t4.jpg" width="260" /></a>
-		</div>
-		<div class="post" style="height:277px">
-				 <a data-ajax="true" href="/login?p1=5"><img src="/images/t5.jpg" width="260" /></a>
-		</div>
-		<div class="post" style="height:277px">
-				 <a data-ajax="true" href="/login?p1=6"><img src="/images/t6.jpg" width="260" /></a>
-		</div>
-		<div class="post" style="height:277px">
-				 <a data-ajax="true" href="/login?p1=7"><img src="/images/t7.jpg" width="260" /></a>
-		</div>
-		<div class="post" style="height:277px">
-				 <a data-ajax="true" href="/login?p1=8"><img src="/images/t8.jpg" width="260" /></a>
-		</div>
-	</div>
-  </body>
+    </script>
+</head>
+<body>
+<form id="indexForm" action="/" method="POST" class="form-horizontal">
+    <div id="<%= masonryContentId %>" style="margin: 15px auto;" class="js-masonry" data-masonry-options='{ "isFitWidth": true, "itemSelector": ".post" }'>
+        <%
+		console.log('locals.userTickets:'+locals.userTickets);
+		console.log('locals.isLogin:'+locals.isLogin);
+        if(userTickets!=null)
+        {
+		
+            for(var i= 0; i < locals.userTickets.length; i++)
+            {
+
+                var ticket = locals.userTickets[i];
+				
+				console.log('ticket>>>>'+ticket);
+				console.log('ticket.id>>>>'+ ticket.id);
+				console.log('ticket.imageUrl>>>>'+ ticket.imageUrl);
+				var ticketId = ticket.id;
+				var ticketImageUrl = ticket.imageUrl;
+                var urlLocation = null;
+                if(locals.isLogin)
+                {
+                    urlLocation = '#';
+                }
+                else
+                {
+                    urlLocation = '/login?p1=' + ticketId;
+                }
+
+        %>
+        <div class="post" style="height:277px">
+            <a data-ajax="true" href="<%=urlLocation%>" onclick="sendTicket('<%=ticketId%>');"><img id="<%=ticketId%>" src="<%=ticketImageUrl%>" width="260" /></a>
+        </div>
+        <%
+            }
+        }
+        %>
+
+        <!--
+        <div class="post" style="height:277px">
+            <a data-ajax="true" href="/login?p1=1"><img id="pro1" src="/images/t1.jpg" width="260" /></a>
+        </div>
+        <div class="post" style="height:277px">
+            <a data-ajax="true" href="/login?p1=2"><img id="pro2" src="/images/t2.jpg" width="260" /></a>
+        </div>
+        <div class="post" style="height:277px">
+            <a data-ajax="true" href="/login?p1=3"><img src="/images/t3.jpg" width="260" /></a>
+        </div>
+        <div class="post" style="height:277px">
+            <a data-ajax="true" href="/login?p1=4"><img src="/images/t4.jpg" width="260" /></a>
+        </div>
+        <div class="post" style="height:277px">
+            <a data-ajax="true" href="/login?p1=5"><img src="/images/t5.jpg" width="260" /></a>
+        </div>
+        <div class="post" style="height:277px">
+            <a data-ajax="true" href="/login?p1=6"><img src="/images/t6.jpg" width="260" /></a>
+        </div>
+        <div class="post" style="height:277px">
+            <a data-ajax="true" href="/login?p1=7"><img src="/images/t7.jpg" width="260" /></a>
+        </div>
+        <div class="post" style="height:277px">
+            <a data-ajax="true" href="/login?p1=8"><img src="/images/t8.jpg" width="260" /></a>
+        </div>
+        -->
+    </div>
+</form>
+</body>
 </html>

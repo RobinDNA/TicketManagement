@@ -94,9 +94,7 @@ router.post('/', function (req, res, next) {
                     errMsg = '注册失败:' + err.code + ' : ' + err.message;
                     res.send(errMsg);
                 }).catch(next);
-                {                    
-                    res.send('注册出错。');
-                }
+               
             }
         , function (error) {
             // 验证码错误，验证失败
