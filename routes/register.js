@@ -25,16 +25,19 @@ router.get('/', function (req, res, next) {
 router.post('/', function (req, res, next) {
     console.log('current page:register.ejs');
     console.log('req:' + req.body);
-    console.log('req.body.inputCellphoneNum:' + req.body.inputCellphoneNum);
+    console.log('req.body.inputCellphoneNumber:' + req.body.inputCellphoneNumber);
     console.log('req.body.inputVerificationCode:' + req.body.inputVerificationCode);
     console.log('req.body.inputPassword:' + req.body.inputPassword);
-    console.log('req.body.inputPasswordAgain:' + req.body.inputPasswordAgain);
-    console.log('req.body.inputCompanyName:' + req.body.inputCompanyName);
+    console.log('req.body.inputPasswordAgain:' + req.body.inputPasswordAgain);    
     console.log('req.body.inputEmail:' + req.body.inputEmail);
+    console.log('req.body.switchState:' + req.body.switchState);
+    console.log('req.body.inputAddress:' + req.body.inputAddress);
+    console.log('req.body.inputCompanyName:' + req.body.inputCompanyName);
+    console.log('req.body.inputEmail:' + req.body.inputChineseName);
     console.log('req.body.inputOrganizationCode:' + req.body.inputOrganizationCode);
     console.log('promotionId:' + promotionId);
 
-    var cellphoneNum = req.body.inputCellphoneNum;
+    var cellphoneNum = req.body.inputCellphoneNumber;
     var verificationCode = req.body.inputVerificationCode;
     var userPassword = req.body.inputPassword;
     var userPasswordAgain = req.body.inputPasswordAgain;
@@ -43,6 +46,7 @@ router.post('/', function (req, res, next) {
     var organizationCode = req.body.inputOrganizationCode;
 
     var vote = req.query.vote;
+
     console.log("vote:" + vote);
     if (vote == 'sendSmsCode') {
         //发送短信
@@ -53,16 +57,18 @@ router.post('/', function (req, res, next) {
             ttl: 10
         }).then(function () {
             //发送成功
-            console.log('向手机' + cellphoneNum + '发送验证码短信成功。');            
-            res.send('发送验证码短信成功。');
+            console.log('向手机' + cellphoneNum + '发送验证码短信成功。');
+            res.json({ isRegisterSuccess: false, errMsg: '发送验证码短信成功。' });
         }, function (err) {
             //发送失败
             var errMsg = err.code + ':' + err.message;
-            console.log('向手机' + cellphoneNum + '发送验证码短信失败。' + errMsg);           
-            res.send('发送验证码短信失败。');
+            errMsg = '向手机' + cellphoneNum + '发送验证码短信失败。' + errMsg;
+            console.log(errMsg);
+            res.json({ isRegisterSuccess: 'false', errMsg: errMsg });
         });
     }
     else if (vote == 'register') {
+        var isRegisterSuccess = true;
         console.log('进入注册');
         if (verificationCode != '') {
             console.log('验证码不为空。');
@@ -87,12 +93,13 @@ router.post('/', function (req, res, next) {
                                         + addZero(date.getHours())
                                         + addZero(date.getMinutes())
                                         + addZero(date.getSeconds())
-                                        + addZero((parseInt(date.getMilliseconds() / 10)));
-                    res.redirect('index', {});
+                                        + addZero((parseInt(date.getMilliseconds() / 10)));                    
+                    var locationUrl = '/login';
+                    res.json({ isRegisterSuccess: true, locationUrl: locationUrl });
                 }, function (err) {
                     console.log('注册失败:' + err.code + ' : ' + err.message);
                     errMsg = '注册失败:' + err.code + ' : ' + err.message;
-                    res.send(errMsg);
+                    res.json({ isRegisterSuccess: false, errMsg: errMsg });                    
                 }).catch(next);
                
             }
@@ -100,14 +107,14 @@ router.post('/', function (req, res, next) {
             // 验证码错误，验证失败
             console.log('验证码错误');
             var errorMsg = '验证码错误:' + err.code + ' : ' + err.message;
-            res.send(errorMsg);
+            res.json({ isRegisterSuccess: false, errMsg: errorMsg });
         }
             );
         }
         else {
             console.log('验证码不能为空')
             var errorMsg = '验证码不能为空';
-            res.send(errorMsg);
+            res.json({ isRegisterSuccess: false, errMsg: errorMsg });
         }
     }
 

@@ -1,3 +1,4 @@
+@charset "utf-8";
 body {
   padding: 30px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -24,3 +25,70 @@ a {
 .ui-mobile-viewport{ border:none;}
 .ui-page {padding: 0; margin: 0; outline: 0} 
 .opacity_bg{background:#000;opacity:0.4;}
+
+/*******************************************************************************************************************/
+/*html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, em, button { margin:0; padding:0; }
+html { background-color:#fff; }
+body { background-color:#fff; font:12px/1.5 Microsoft YaHei,Helvetica,Verdana,sans-serif; color:#595757; }
+img, fieldset { margin:0; padding:0; border:0; }
+input, textarea {font-size:14px;}
+table { border-collapse:collapse; }
+a { color:#595757; text-decoration:none; outline:none; cursor: pointer;}
+a:hover { color: #0c4ca3; text-decoration:underline; }
+ul li, ol li { list-style:none; }
+dfn { font-style:normal; font-size:12px; font-family:Arial !important; }
+select { padding:1px;font-family: microsoft yahei; border:1px solid #e0e0e0; background-color:#FFF;font-family: microsoft yahei;}
+input[type="text"],input[type="number"],textarea { padding:3px; border:solid 1px #e0e0e0; border-radius:2px; font-family: microsoft yahei;}
+input[type="text"]:focus,input[type="number"]:focus{ background-color:#f1f9ff; border:#e0e0e0 solid 1px;box-shadow: 1px 1px 3px #ddd inset;}
+textarea{resize:none;}
+.basefix,.layoutfix { *zoom:1; }
+.basefix:after,.layoutfix:after { clear:both; content:'.'; display:block; height:0; overflow:hidden; }
+.invisible { visibility:hidden !important; }
+.hidden { display:none !important; }
+.input_error {background-color: #FFF7D9 !important;border-color: #D80000 #E50000 #E50000 #D80000 !important;border-style: solid;}
+.input_default { color:#808080 !important; }
+em,i{ font-style: normal;}
+img{ vertical-align: top; border: none;}
+.submit{ border-radius: 3px; font-family: microsoft yahei;}*/
+
+/*×ó²àµÇÂ¼ÐÅÏ¢*/
+/*.login_info{ float: left; display: inline;}
+.login_info .a_expert{ color: #0c4ca3}
+.login_info .login_item{ float: left; display: inline; position: relative;}
+.login_info .username{ margin-right: 10px}
+.login_item a{ position: relative; padding-right: 20px; display: block;}/*µÇÂ¼ºó*/
+.login_item a.mes{ padding-left: 20px;}
+.login_item b{display: inline-block; height: 0; width: 0; line-height: 0; font-size: 0; overflow: hidden;border-width: 6px 5px 0; border-style: solid dashed none;position: absolute; right: 5px; top:23px;-webkit-transition: transform 0.2s ease 0s; transition: transform 0.2s ease 0s;}
+.login_item .b1{border-color: #666 transparent transparent; }
+.login_item .b2{border-color: #f8f8f8 transparent transparent; top: 21px}
+.login_item.cur b{-webkit-transform: rotate(-180deg); transform: rotate(-180deg); top: 21px}
+.login_item.cur .b2{top: 23px}
+.icon_mes{ height: 12px;width: 12px; background-position:-20px -70px; display: inline-block; vertical-align:-2px; margin-right: 5px;}*/
+
+/*==bg spirite==*/
+/*.icon_succ,.QapTcha .Slider,.QapTcha .SliderSuccess,.icon_ser,.icon_m_tel,.icon_m_ems,.icon_scan{ background: url(/img/un_icon.png) no-repeat;}*/
+
+/*== ¹«¹² ==*/
+/*.input_txt[type="text"],.input_txt[type="password"]{ border: #c9caca 1px solid; height: 30px; padding: 10px; border-radius: 3px; width: 280px; font:14px/30px microsoft yahei;box-shadow:none;}
+.form{ position: relative;}
+.row{ line-height: 50px; margin-bottom:30px; padding-left: 100px; position: relative;*zoom:1; }
+.row label{ float: left; margin-left: -90px; width: 90px;font-size: 14px; font-weight: 800}
+.form:after,.row:after { clear:both; content:'.'; display:block; height:0; overflow:hidden; }
+.error_tips{ background: #fef2f2; border: #ff7e00 1px solid; padding:5px 10px; position: absolute; bottom:-10px; left:0; width: 278px;}
+.error_tips em{ color: #ff7e00; display: inline-block; margin: 0 5px;}*/
+
+/*== µÇÂ½ ==*/
+/*.reg_box{ top: 140px}
+.corp_slogo{ position:absolute; left: 50%; top: 250px; width: 500px; margin-left:-500px; font:800 35px/1 microsoft yahei; color: #fff;}
+.forget{ text-align: right;}
+.a_forget{ color: #0c4ca3; text-decoration: underline;}
+.go_reg{ float: right;}
+.banner_login .agree{ margin-bottom: 18px}
+.forget{ margin-top: 15px}
+.login .row{ margin-bottom: 10px; background: #fff;}
+.login .input_txt[type="text"], .login .input_txt[type="password"]{ border: 0 none; height: 34px; line-height: 34px; width: 220px; padding: 0;}
+.login .row{ padding-left: 80px; line-height: 35px}
+.login .row label{ margin-left: -70px; width: 70px; line-height: 35px}
+.reg_box .error_tips{ left:0; top: auto}*/
+
+/*******************************************************************************************************************/

@@ -98,23 +98,32 @@ app.get('/', function (req, res) {
             arr[i] = { 'id': tickets[i].id, 'imageUrl': tickets[i].get('TicketImage').url() };
             console.log('arr[' + i + ']:' + arr[i]);
         }
-        //res.locals.userTickets = 'test';
 
         if (req.currentUser) {
             isLogin = true;
+            console.log('isLogin:' + isLogin);
+
+            ////已订购的优惠券码
+            console.log("next is user");
+            var curUser = req.currentUser;
+            console.log('curUser:' + curUser);
+
+            var currentUserActivationCodesRelation = curUser.relation('ActivationCodes');
+            console.log('currentUserActivationCodesRelation:' + currentUserActivationCodesRelation);
+            var currentUserActivationCodesQuery = currentUserActivationCodesRelation.query();
+
+            currentUserActivationCodesQuery.find().then(function (resultAllActivationCodes) {
+                // results 是一个 AV.Object 的数组，它包含所有当前 user 的 ActivationCode
+                for (var i = 0; i < resultAllActivationCodes.length; i++) {
+                    var acId = resultAllActivationCodes[i].Id;
+                    ownTickets[i] = { 'id': acId };
+                    console.log('ownTickets[i]:' + ownTickets[i]);
+                }
+            }, function (error) {
+            });
+
         }
-
-        ////已订购的优惠券码
-
-        var currentUser = AV.User.current();
-        //var currentUserActivationCodesRelation = currentUser.relation('ActivationCodes');
-        //var currentUserActivationCodesQuery = currentUserActivationCodesRelation.query();
-        //var allActivationCodes = currentUserActivationCodesQuery.find();
-        //// results 是一个 AV.Object 的数组，它包含所有当前 user 的 所有的ActivationCodes
-        //for (var i = 0; i < allActivationCodes.length; i++) {
-        //    var activationCodeId = allActivationCodes[i].Id;
-        //    ownTickets[i] = { 'id': activationCodeId };
-        //}
+        
         console.log('ownTickets[0]:' + ownTickets[0]);
         res.render('index', { userTickets: arr, ownTickets: ownTickets, isLogin: isLogin });
     }, function (error) { });
