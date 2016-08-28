@@ -11,15 +11,32 @@ router.get('/', function (req, res, next) {
     console.log('p1:' + req.query.p1);
     promotionId = req.query.p1;
     //尝试获取session中的user，如果存在，说明已登录，直接使用
-    if (req.currentUser) {
+    //if (req.currentUser) {
 
-        // 如果已经登录，发送当前登录用户信息。 
-        res.render('usersmanagement', { 'cellphoneNum': '' });
-    } else {
-        // 没有登录，跳转到登录页面。
-        res.redirect('/login');
-    }
-    //res.render('usersmanagement', { 'cellphoneNum': '' });
+    //    // 如果已经登录，发送当前登录用户信息。 
+    //    res.render('usersmanagement', { 'cellphoneNum': '' });
+    //} else {
+    //    // 没有登录，跳转到登录页面。
+    //    res.redirect('/login');
+    //}
+
+    var queryPerson = new AV.Query('_User');
+    queryPerson.equalTo('MemberType', '1');
+    queryPerson.find().then(function (results) {
+        var personItems = results;
+        res.json({ personItems: personItems });
+    }, function (error) {
+    });
+
+    var queryCompany = new AV.Query('_User');
+    queryCompany.equalTo('MemberType', '2');
+    queryCompany.find().then(function (results) {
+        var companyItems = results;
+        res.json({ companyItems: companyItems });
+    }, function (error) {
+    });
+
+    res.render('usersmanagement', { 'cellphoneNum': '' });
 });
 
 router.post('/', function (req, res, next) {
@@ -30,7 +47,7 @@ router.post('/', function (req, res, next) {
     var userPassword = req.body.inputPassword;
     var email = req.body.inputEmail;
     var companyName = req.body.inputCompanyName;
-    var organizationCode = req.body.inputOrganizationCode;
+    var organizationCode = req.body.inputProjectDesc;
 
     var vote = req.body.btnVote;
 

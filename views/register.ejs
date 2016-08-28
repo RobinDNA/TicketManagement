@@ -14,11 +14,12 @@
     <link rel="stylesheet" href="/stylesheets/bootstrap-switch.min.css">
     <link rel="stylesheet" href="/stylesheets/bootstrapValidator.min.css" />
 
+
     <script type="text/javascript">
-        function registerUser(vote) {
+        function sendSMS() {
             var arr = $('#registerForm').serializeArray();
             $.ajax({
-                url: '/register?vote=' + vote,
+                url: '/register?vote=sendSmsCode',
                 data: $.param(arr),
                 type: 'post',
                 dataType: 'text',
@@ -27,20 +28,89 @@
                     var jsonData = JSON.parse(msg);
                     console.log(msg);
                     console.log(jsonData.isRegisterSuccess);
-                    if (jsonData.isRegisterSuccess != null && jsonData.isRegisterSuccess == true) {
-                        console.log('redirect to ' + jsonData.locationUrl);
-                        window.location.href = jsonData.locationUrl;
-                    } else {
+                    
+                    if (jsonData.isSendSuccess != null && jsonData.isSendSuccess == true)
+                    {
+                        timer(60);
+                    }
+                    if (jsonData.isSendSuccess != null)
+                    {
                         $('#divError').show();
                         $('#lblErrMsg').text(jsonData.errMsg);
                     }
                 }
             })
+        };
+
+        function registerUser() {
+            var formData = new FormData($("#registerForm")[0]);
+            $.ajax({
+                url: '/register?vote=register',
+                data: formData,
+                type: 'post',
+                dataType: 'text',
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (msg) {
+                    console.log('hello');
+                    var jsonData = JSON.parse(msg);
+                    console.log(msg);
+                    console.log(jsonData.isRegisterSuccess);
+                    if (jsonData.isRegisterSuccess != null && jsonData.isRegisterSuccess == true) {
+                        console.log('redirect to ' + jsonData.locationUrl);
+                        $('#myModal').modal('show')
+                        window.location.href = jsonData.locationUrl;                        
+                    } else {
+                        $('#divError').show();
+                        $('#lblErrMsg').text(jsonData.errMsg);
+                    }
+                }
+            });
         }
+
+        function timer(time) {
+            var btn = $("#btnSendSMS");
+            btn.attr("disabled", true);  //按钮禁止点击
+            btn.val(time <= 0 ? "发送动态密码" : ("" + (time) + "秒后可发送"));
+            var hander = setInterval(function () {
+                if (time <= 0) {
+                    clearInterval(hander); //清除倒计时
+                    btn.val("发送动态密码");
+                    btn.attr("disabled", false);
+                    return false;
+                } else {
+                    btn.val("" + (time--) + "秒后可发送");
+                }
+            }, 1000);
+        };
+
+		// 前端代码，基于 jQuery
+		function uploadPhoto() {
+		  var registerFormDom = $('#registerForm');
+		  var uploadInputDom = registerFormDom.find('input[type=file]');
+		  // 获取浏览器 file 对象
+		  var files = uploadInputDom[0].files;
+		  // 创建 formData 对象
+		  var formData = new window.FormData(registerFormDom[0]);
+		  if (files.length) {
+			$.ajax({
+			  // 注意，这个 url 地址是一个例子，真实使用时需替换为自己的上传接口 url
+			  url: '/register',
+			  method: 'post',
+			  data: formData,
+			  processData: false,
+			  contentType: false
+			}).then((data) => {
+			  // 上传成功，服务端设置返回
+			  console.log(data);
+			});
+		  }
+		};
     </script>
 </head>
 <body>
-    <form id="registerForm" action="/register" method="POST" class="form-horizontal">
+    <form id="registerForm" action="/register" method="POST" enctype="multipart/form-data" class="form-horizontal">
         <div id="divError" class="form-group has-error">
             <label id="lblErrMsg" class="control-label" for="inputWarning1"></label>
         </div>
@@ -49,7 +119,7 @@
             <div class="input-group">
                 <input type="text" name="inputCellphoneNumber" id="inputCellphoneNumber" class="form-control" placeholder="手机号">
                 <span class="input-group-btn">
-                    <button type="button" name="btnVote" class="btn btn-default" value="sendSmsCode" onclick="registerUser('sendSmsCode')">发送</button>
+                    <button type="button" name="btnSendSMS" id="btnSendSMS" class="btn btn-default" value="sendSmsCode" onclick="sendSMS();">发送</button>
                 </span>
             </div>
         </div>
@@ -78,17 +148,34 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <label>个人/企业：</label>
+            <label>所在行业：</label>
             <div class="input-group">
-                <input type="checkbox" name="switch-state" id="switchState" checked data-on-text="个人" data-off-text="企业">
+                <select id="sltIndustry" name="sltIndustry" type="text" class="form-control select2" placeholder="所在行业...">
+                    <option value="FWS">服务商</option>
+                    <option value="CY">餐饮</option>
+                    <option value="SQ">社区</option>
+                    <option value="LY">旅游</option>
+                    <option value="JY">教育</option>
+                    <option value="YL">医疗</option>
+                    <option value="QC">汽车</option>
+                    <option value="JR">金融</option>
+                    <option value="LS">零售</option>
+                    <option value="FC">房产</option>
+                    <option value="CX">出行</option>
+                    <option value="DS">电商</option>
+                    <option value="JJ">家居</option>
+                    <option value="HJ">婚嫁</option>
+                    <option value="QT">其他</option>
+                </select>
             </div>
         </div>
         <div class="col-lg-6">
-            <label>地址：</label>
+            <label>个人/企业：</label>
             <div class="input-group">
-                <input type="text" class="form-control" name="inputAddress" id="inputAddress" placeholder="地址">
+                <input type="checkbox" name="switchState" id="switchState" checked data-on-text="个人" data-off-text="企业">
             </div>
         </div>
+
         <div class="col-lg-6" id="divCompanyName">
             <label>公司名称：</label>
             <div class="input-group">
@@ -101,25 +188,51 @@
                 <input type="text" class="form-control" name="inputChineseName" id="inputChineseName" placeholder="姓名">
             </div>
         </div>
-        <div class="col-lg-6" id="divOrgCode">
-            <label>机构代码：</label>
-            <div class="input-group">
-                <input type="text" class="form-control" name="inputOrganizationCode" id="inputOrganizationCode" placeholder="机构代码">
-            </div>
-        </div>
+        <div class="col-lg-6" id="divProjectDesc">
+            <label>项目介绍/吐槽：</label>
+            <textarea class="form-control" name="inputProjectDesc" id="inputProjectDesc" rows="3"></textarea>
+        </div>        
         <div class="col-lg-6" id="divBussinessLic">
             <label for="exampleInputFile">营业执照上传</label>
-            <input type="file" id="inputBusinessLicences">
+            <input type="file" name="fileBusinessLicences" id="fileBusinessLicences" accept="image/gif, image/jpeg, image/png">
             <p class="help-block">上传企业营业执照，文件大小不超过400k。</p>
         </div>
         <div class="col-lg-6" id="divPersonId">
             <label for="exampleInputFile">身份证件上传</label>
-            <input type="file" id="inputBusinessLicences">
-            <p class="help-block">上传身份证，文件大小不超过400k。</p>
+            <input type="file" name="filePersonId" id="filePersonId" accept="image/gif, image/jpeg, image/png">
+            <p class="help-block">上传身份证，本人手持身份证，露脸清晰可见，文件大小不超过400k。</p>
+        </div>
+        <div class="col-lg-6" id="divPersonId">
+            <label></label>
+            <p class="help-block">以上公司/个人信息我们都将会为您保密，请放心注册哦！</p>
         </div>
         <div class="col-lg-6">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" class="btn btn-default" name="btnVote" value="register" onclick="registerUser('register')">注 册</button>
+                <button type="button" class="btn btn-default" name="btnVote" value="register" onclick="registerUser()">注 册</button>
+            </div>
+        </div>
+
+
+        <!-- Button trigger modal -->
+        <!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            注册成功
+        </button>-->
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">注册</h4>
+                    </div>
+                    <div class="modal-body">
+                        恭喜您注册成为创商科会员，我们的工作人员会在3个工作日内与您联系，祥尽了解您的需求，请注意接听电话！
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
@@ -128,15 +241,13 @@
             $("input[type=\"checkbox\"], input[type=\"radio\"]").not("[data-switch-no-init]").bootstrapSwitch();
 
             $("#divCompanyName").hide();
-            $("#divOrgCode").hide();
             $("#divBussinessLic").hide();
             $("#divChineseName").show();
             $("#divPersonId").show();
 
-            $('input[id="switch-state"]').on('switchChange.bootstrapSwitch', function (event, state) {
+            $('input[id="switchState"]').on('switchChange.bootstrapSwitch', function (event, state) {
                 if (state) {
                     $("#divCompanyName").hide();
-                    $("#divOrgCode").hide();
                     $("#divBussinessLic").hide();
                     $("#divChineseName").show();
                     $("#divPersonId").show();
@@ -144,7 +255,6 @@
                 else {
 
                     $("#divCompanyName").show();
-                    $("#divOrgCode").show();
                     $("#divBussinessLic").show();
                     $("#divChineseName").hide();
                     $("#divPersonId").hide();
@@ -154,6 +264,7 @@
         });
 
         $(document).ready(function () {
+            $("span[class='good list Card']").hide();
             $("#registerForm").bootstrapValidator({
                 message: 'This value is not valid',
                 feedbackIcons: {/*input状态样式图片*/
@@ -232,7 +343,7 @@
                             stringLength: {
                                 min: 3,
                                 max: 30,
-                                message: '用户名长度必须在3到30之间'
+                                message: '密码长度必须在3到30之间'
                             },
                             identical: {//相同
                                 field: 'inputPasswordAgain', //需要进行比较的input name值
@@ -248,7 +359,7 @@
                         message: '密码无效',
                         validators: {
                             notEmpty: {
-                                message: '用户名不能为空'
+                                message: '密码不能为空'
                             },
                             stringLength: {
                                 min: 3,

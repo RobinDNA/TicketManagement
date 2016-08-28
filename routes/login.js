@@ -47,7 +47,8 @@ router.post('/', function (req, res, next) {
         }, function (err) {
             isLoginSuccess = false;
             var errMsg = err.code + ':' + err.message;
-            res.json({ isLoginSuccess: isLoginSuccess, errMsg: errMsg });
+            console.log(errMsg);
+            res.json({ isLoginSuccess: isLoginSuccess, errMsg: "手机号/密码不正确。" });
         }).catch(next);
         
     }

@@ -29,7 +29,7 @@ router.post('/', function (req, res, next) {
     var userPassword = req.body.inputPassword;
     var email = req.body.inputEmail;
     var companyName = req.body.inputCompanyName;
-    var organizationCode = req.body.inputOrganizationCode;
+    var organizationCode = req.body.inputProjectDesc;
 
     var vote = req.body.btnVote;
 
