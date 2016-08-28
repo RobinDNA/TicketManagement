@@ -4,6 +4,7 @@
     <title>会员列表</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
     <script src="/js/masonry.pkgd.min.js"></script>
+    <script src="/js/jquery.min.js" type="text/javascript"></script>
     <script src="/js/jquery.mobile-1.4.5.min.js"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <script type="text/javascript">
@@ -42,7 +43,8 @@
                 <tr>
                     <th>#</th>
                     <th>手机号</th>
-                    <th>姓名</th>
+					<th>个人/企业</th>
+                    <th>姓名/公司名</th>
                     <th>Email</th>
                     <th>行业</th>
                     <th>状态</th>
@@ -50,10 +52,11 @@
                 </tr>
             </thead>
 			<%
-			if(personItems!=null && personItems!='')
+			if(userItems!=null && userItems!='')
 			{
-				for(var i=0; i<personItems.length; i++)
+				for(var i=0; i<userItems.length; i++)
 				{
+					var item = userItems[i];
 					var temp=i % 2
 					if(temp= =1)
 					{
@@ -68,13 +71,69 @@
 			<%
 					}
 			%>
-					<td><%=i %></td>
-							<td>13922222222</td>
-							<td>13988888888</td>
-							<td>服务商</td>
-							<td>京东上海有限公司</td>
-							<td>53624356</td>
-							<td>申请中</td>
+							<td><%=i %></td>
+							<td><%=item.get('username') %></td>
+							<td>
+							<%
+							if(item.get('MemberType') == '1')//个人
+							{
+							%>
+							个人
+							<%
+							}
+							%>
+							<%
+							if(item.get('MemberType') == '2')//企业
+							{
+							%>
+							企业
+							<%
+							}
+							%>
+							</td>
+							<td><%
+							if(item.get('MemberType') == '1')//个人 - 姓名
+							{
+							%>
+							<%=item.get('ChineseName') %>
+							<%
+							}
+							%>
+							<%
+							if(item.get('MemberType') == '2')//企业 - 公司名
+							{
+							%>
+							<%=item.get('CompanyName') %>
+							<%
+							}
+							%>
+							</td>
+							<td>
+							<%
+							if(item.get('MemberStatus') == '1')/1:待审核；2:通过；3：不通过
+							{
+							%>
+							待审核
+							<%
+							}
+							%>
+							<%
+							if(item.get('MemberStatus') == '2')/1:待审核；2:通过；3：不通过
+							{
+							%>
+							通过
+							<%
+							}
+							%>
+							<%
+							if(item.get('MemberStatus') == '3')/1:待审核；2:通过；3：不通过
+							{
+							%>
+							不通过
+							<%
+							}
+							%>
+							</td>
 							<td><button type="button" name="btnVote" value="pass">审核</button><button type="button" name="btnVote" value="detail">详细</button></td>
 					</tr>
 			<%		
@@ -82,53 +141,6 @@
 			}
 			%> 
         </table>
-
-        <table class="table table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>手机号</th>
-                    <th>公司名称</th>
-                    <th>Email</th>
-                    <th>行业</th>
-                    <th>状态</th>
-                    <th></th>
-                </tr>
-            </thead>
-			<%
-			if(companyItems!=null && companyItems!='')
-			{
-				for(var i=0; i<companyItems.length; i++)
-				{
-					var temp=i % 2
-					if(temp= =1)
-					{
-			%>
-						<tr class="warning">
-			<%
-					}else
-					{
-			%>
-
-						<tr class="success">
-			<%
-					}
-			%>
-					<td><%=i %></td>
-							<td>13922222222</td>
-							<td>13988888888</td>
-							<td>服务商</td>
-							<td>京东上海有限公司</td>
-							<td>53624356</td>
-							<td>申请中</td>
-							<td><button type="button" name="btnVote" value="pass">审核</button><button type="button" name="btnVote" value="detail">详细</button></td>
-					</tr>
-			<%		
-				}
-			}
-			%> 
-        </table>
-
     </form>
 </body>
 </html>

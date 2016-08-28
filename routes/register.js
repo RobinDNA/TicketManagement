@@ -108,7 +108,7 @@ router.post('/', function (req, res, next) {
                 if (switchState=='on') {
                     //1:个人；2:企业；3:管理员
                     user.set("MemberType", '1');
-                    user.set("chineseName", chineseName);
+                    user.set("ChineseName", chineseName);
                     user.set("PersonIdImg", filePersonId);
                 }
                 else
@@ -116,7 +116,7 @@ router.post('/', function (req, res, next) {
                     //1:个人；2:企业；3:管理员
                     user.set("MemberType", '2');
                     //2 企业用户
-                    user.set("companyName", companyName);
+                    user.set("CompanyName", companyName);
                     user.set("BusinessLicencesImg", fileBusinessLicences);
                 }
 

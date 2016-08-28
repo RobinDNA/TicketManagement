@@ -20,23 +20,18 @@ router.get('/', function (req, res, next) {
     //    res.redirect('/login');
     //}
 
-    var queryPerson = new AV.Query('_User');
-    queryPerson.equalTo('MemberType', '1');
-    queryPerson.find().then(function (results) {
-        var personItems = results;
-        res.json({ personItems: personItems });
-    }, function (error) {
-    });
+    var queryUser = new AV.Query('_User');
+    queryUser.notEqualTo('MemberType', '3');
+    queryUser.find().then(function (results) {
+        res.locals.userItems = results;
+        console.log('personItems:' + personItems);
+        console.log('personItems[0].get("username"):' + personItems[0].get('username'));
+        console.log('personItems[0].get("id"):' + personItems[0].get('id'));
 
-    var queryCompany = new AV.Query('_User');
-    queryCompany.equalTo('MemberType', '2');
-    queryCompany.find().then(function (results) {
-        var companyItems = results;
-        res.json({ companyItems: companyItems });
+        res.render('usersmanagement', {});
     }, function (error) {
+        console.log(error.code + ':' + error.message);
     });
-
-    res.render('usersmanagement', { 'cellphoneNum': '' });
 });
 
 router.post('/', function (req, res, next) {

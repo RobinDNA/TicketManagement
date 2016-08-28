@@ -49,67 +49,35 @@
                     <th></th>
                 </tr>
             </thead>
-            <%
-            if(item!=null && item!='')
-            {
-            for(var i=0; i
-            <item.length; i++)
-                          {
-                          var temp=i % 2
-                          if(temp= =1)
-                          {
-                          %>
-                <tr class="warning">
-                    <%
-                    }else
-                    {
-                    %>
-
-                <tr class="success">
-                    <%
-                    }
-                    %>
-                    <td><%=i %></td>
-                    <td>13922222222</td>
-                    <td>13988888888</td>
-                    <td>服务商</td>
-                    <td>京东上海有限公司</td>
-                    <td>53624356</td>
-                    <td>申请中</td>
-                    <td><button type="button" name="btnVote" value="pass">审核</button><button type="button" name="btnVote" value="detail">详细</button></td>
-                </tr>
-                <%
-                }
-                }
-                %>
-                <tr class="warning">
-                    <td><%=i %></td>
-                    <td>13988888888</td>
-                    <td>服务商</td>
-                    <td>京东上海有限公司</td>
-                    <td>53624356</td>
-                    <td>申请中</td>
-                    <td><button type="button" name="btnVote" value="pass">审核</button><button type="button" name="btnVote" value="detail">详细</button></td>
-                </tr>
-                <tr class="success">
-                    <td>2</td>
-                    <td>13922222222</td>
-                    <td>会员</td>
-                    <td>京东上海有限公司2</td>
-                    <td>53624356</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="success">
-                    <td>2</td>
-                    <td>13933333333</td>
-                    <td>会员</td>
-                    <td>京东上海有限公司2</td>
-                    <td>53624356</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-</table>
+            
+            <tr class="warning">
+                <td><%=i %></td>
+                <td>13988888888</td>
+                <td>服务商</td>
+                <td>京东上海有限公司</td>
+                <td>53624356</td>
+                <td>申请中</td>
+                <td><button type="button" name="btnVote" value="pass">审核</button><button type="button" name="btnVote" value="detail">详细</button></td>
+            </tr>
+            <tr class="success">
+                <td>2</td>
+                <td>13922222222</td>
+                <td>会员</td>
+                <td>京东上海有限公司2</td>
+                <td>53624356</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="success">
+                <td>2</td>
+                <td>13933333333</td>
+                <td>会员</td>
+                <td>京东上海有限公司2</td>
+                <td>53624356</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
 
         <table class="table table-hover table-bordered">
             <thead>
