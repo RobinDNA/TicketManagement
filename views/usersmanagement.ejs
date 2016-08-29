@@ -8,16 +8,16 @@
     <script src="/js/jquery.mobile-1.4.5.min.js"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <script type="text/javascript">
-        function registerUser(vote) {
-            var arr = $('#registerForm').serializeArray();
+        function userOperation(vote,id) {
+            var arr = $('#usersManagementForm').serializeArray();
             $.ajax({
-                url: '/register?vote=' + vote,
+                url: '/usersmanagement?vote=' + vote + '&id='+ id,
                 data: $.param(arr),
                 type: 'post',
                 dataType: 'text',
                 success: function (msg) {
-                    $('#registerForm').show();
-                    $('#lblErrMsg').text(msg);
+                    $('#divError').show();
+                    $('#lblErrMsg').text(msg.errMsg);
                 }
 
             })
@@ -37,7 +37,10 @@
             </div>
         </div><!-- /.container-fluid -->
     </nav>
-    <form action="/usersmanagement" method="POST" class="form-horizontal">
+    <form name="usersManagementForm" id="usersManagementForm" action="/usersmanagement" method="POST" class="form-horizontal">
+		<div id="divError" class="form-group has-error">
+            <label id="lblErrMsg" class="control-label" for="inputWarning1"></label>
+        </div>
         <table class="table table-hover table-bordered">
             <thead>
                 <tr>
@@ -53,25 +56,28 @@
             </thead>
 			<%
 			if(userItems!=null && userItems!='')
-			{
+			{	
+				console.log('userItems page:'+ userItems);
 				for(var i=0; i<userItems.length; i++)
 				{
 					var item = userItems[i];
-					var temp=i % 2
-					if(temp= =1)
+					var temp=i % 2;
+					if(temp == 1)
 					{
-			%>
+						%>						
 						<tr class="warning">
-			<%
-					}else
-					{
-			%>
-
-						<tr class="success">
-			<%
+						
+						<%
 					}
-			%>
-							<td><%=i %></td>
+					else
+					{
+						%>
+						<tr class="success">
+						<%
+					}
+						
+			%>	
+							<td><%=i+1 %></td>
 							<td><%=item.get('username') %></td>
 							<td>
 							<%
@@ -91,7 +97,8 @@
 							}
 							%>
 							</td>
-							<td><%
+							<td>
+							<%
 							if(item.get('MemberType') == '1')//个人 - 姓名
 							{
 							%>
@@ -109,8 +116,133 @@
 							%>
 							</td>
 							<td>
+							<%=item.get('email') %>
+							</td>
+							<td>
 							<%
-							if(item.get('MemberStatus') == '1')/1:待审核；2:通过；3：不通过
+							if(item.get('Industry') == 'FWS')
+							{
+							%>
+							服务商
+							<%
+							}
+							%>
+							<%
+							if(item.get('Industry') == 'CY')
+							{
+							%>
+							餐饮
+							<%
+							}
+							%>
+							<%
+							if(item.get('Industry') == 'SQ')
+							{
+							%>
+							社区
+							<%
+							}
+							%>
+							<%
+							if(item.get('Industry') == 'LY')
+							{
+							%>
+							旅游
+							<%
+							}
+							%>
+							<%
+							if(item.get('Industry') == 'JY')
+							{
+							%>
+							教育
+							<%
+							}
+							%>
+							<%
+							if(item.get('Industry') == 'YL')
+							{
+							%>
+							医疗
+							<%
+							}
+							%>
+							<%
+							if(item.get('Industry') == 'QC')
+							{
+							%>
+							汽车
+							<%
+							}
+							%>
+							<%
+							if(item.get('Industry') == 'JR')
+							{
+							%>
+							金融
+							<%
+							}
+							%>
+							<%
+							if(item.get('Industry') == 'LS')
+							{
+							%>
+							零售
+							<%
+							}
+							%>
+							<%
+							if(item.get('Industry') == 'FC')
+							{
+							%>
+							房产
+							<%
+							}
+							%>
+							<%
+							if(item.get('Industry') == 'CX')
+							{
+							%>
+							出行
+							<%
+							}
+							%>
+							<%
+							if(item.get('Industry') == 'DS')
+							{
+							%>
+							电商
+							<%
+							}
+							%>
+							<%
+							if(item.get('Industry') == 'JJ')
+							{
+							%>
+							家居
+							<%
+							}
+							%>
+							<%
+							if(item.get('Industry') == 'HJ')
+							{
+							%>
+							婚嫁
+							<%
+							}
+							%>
+							<%
+							if(item.get('Industry') == 'QT')
+							{
+							%>
+							其他
+							<%
+							}
+							%>
+							</td>
+							<td>
+							<%
+							if(item.get('MemberStatus') == '1')//1:待审核；2:通过；3：不通过
 							{
 							%>
 							待审核
@@ -118,7 +250,7 @@
 							}
 							%>
 							<%
-							if(item.get('MemberStatus') == '2')/1:待审核；2:通过；3：不通过
+							if(item.get('MemberStatus') == '2')//1:待审核；2:通过；3：不通过
 							{
 							%>
 							通过
@@ -126,7 +258,7 @@
 							}
 							%>
 							<%
-							if(item.get('MemberStatus') == '3')/1:待审核；2:通过；3：不通过
+							if(item.get('MemberStatus') == '3')//1:待审核；2:通过；3：不通过
 							{
 							%>
 							不通过
@@ -134,13 +266,30 @@
 							}
 							%>
 							</td>
-							<td><button type="button" name="btnVote" value="pass">审核</button><button type="button" name="btnVote" value="detail">详细</button></td>
-					</tr>
-			<%		
+
+							<td><button type="button" name="btnVote" value="pass" onclick="userOperation('pass','<%=item.get('id') %>')">审核</button><button type="button" name="btnVote" value="detail" onclick="userOperation('detail','<%=item.get('id') %>')">详细</button></td>
+			</tr>
+				
+			<%	
 				}
 			}
 			%> 
         </table>
+<div class="col-lg-6">
+    <label>手机号：</label>
+    <div class="input-group">
+        <input type="text" class="form-control" name="inputCellphoneNums" id="inputCellphoneNums" placeholder="手机号，以分号分隔">
+    </div>
+</div>
+<div class="col-lg-6" id="divSMSContent">
+    <label>短信内容：</label>
+    <textarea class="form-control" name="inputSMSContent" id="inputSMSContent" rows="3"></textarea>
+</div>
+<div class="col-lg-6">
+    <div class="col-sm-offset-2 col-sm-10">
+        <button type="button" class="btn btn-default" name="btnVote" value="sendSMS" onclick="userOperation('sendSMS','formdata')">发送短信</button>
+    </div>
+</div>
     </form>
 </body>
 </html>

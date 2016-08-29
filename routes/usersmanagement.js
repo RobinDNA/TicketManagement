@@ -24,9 +24,11 @@ router.get('/', function (req, res, next) {
     queryUser.notEqualTo('MemberType', '3');
     queryUser.find().then(function (results) {
         res.locals.userItems = results;
-        console.log('personItems:' + personItems);
-        console.log('personItems[0].get("username"):' + personItems[0].get('username'));
-        console.log('personItems[0].get("id"):' + personItems[0].get('id'));
+        var userItems = results;
+
+        console.log('userItems:' + userItems);
+        console.log('userItems[0].get("username"):' + userItems[0].get('username'));
+        console.log('userItems[0].get("id"):' + userItems[0].get('id'));
 
         res.render('usersmanagement', {});
     }, function (error) {
@@ -38,23 +40,63 @@ router.post('/', function (req, res, next) {
     console.log('current page:usersmanagement.ejs');
     console.log('req:' + req.body);
 
-    var cellphoneNum = req.body.inputCellphoneNum;
-    var userPassword = req.body.inputPassword;
-    var email = req.body.inputEmail;
-    var companyName = req.body.inputCompanyName;
-    var organizationCode = req.body.inputProjectDesc;
+    var vote = req.query.vote;
+    console.log("vote:" + vote);
+    var userId = req.query.id;
+    console.log("userId:" + userId);
 
-    var vote = req.body.btnVote;
+    if (vote == 'pass') {
+        //审核
+        if (userId != null && userId != '')
+        {
+            var query = new AV.Query('_User');
+            query.get(userId).then(function (userData) {
+                // 成功获得实例
+                // data 就是 id 为 57328ca079bc44005c2472d0 的 Todo 对象实例
+                var person = userData;
+                person.set('')
 
-    if (vote == 'sendSmsCode') {
-        //发送短信
-        res.render('usersmanagement', null);
+                person.set('MemberStatus', '2');
+                person.save().then(function (personData) {
+                    res.json({ verification: 'true', errMsg: errMsg });
+                }, function (error)
+                {
+                    //审核失败。
+                    var errMsg = err.code + ':' + err.message;
+                    errMsg = '审核失败。(' + errMsg + ")";
+                    console.log(errMsg);
+                    res.json({ operation:'pass', verification: 'false', errMsg: errMsg });
+                });
+
+            }, function (error) {
+                // 失败了
+                
+            });
+        }
+        
     }
-    else if (vote == 'register') {
-        //注册逻辑
+    if (vote == 'detail') {
+        //查看详细信息
+        //审核
+        if (userId != null && userId != '') {
+            var query = new AV.Query('_User');
+            query.get(userId).then(function (userData) {
+                // 成功获得实例
+                // data 就是 id 为 57328ca079bc44005c2472d0 的 Todo 对象实例
+                var person = userData;
+                res.json({ operation: 'detail', detailData: person, errMsg: errMsg });
 
-        //注册成功
-        res.redirect('/usersmanagement?p1=' + promotionId);
+            }, function (error) {
+                // 失败了
+
+            });
+        }
+    }
+    if (vote == 'sendSMS') {
+        //发送短信
+        var cellphoneNums = req.body.inputCellphoneNums;
+        var smsContent = req.body.inputSMSContent;
+
     }
 
 });
