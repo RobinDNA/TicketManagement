@@ -59,7 +59,7 @@
                     console.log(jsonData.isRegisterSuccess);
                     if (jsonData.isRegisterSuccess != null && jsonData.isRegisterSuccess == true) {
                         console.log('redirect to ' + jsonData.locationUrl);
-                        $('#myModal').modal('show')
+                        $('#myModal').modal('show');
                         window.location.href = jsonData.locationUrl;                        
                     } else {
                         $('#divError').show();

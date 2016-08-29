@@ -58,11 +58,11 @@ router.post('/', function (req, res, next) {
 
                 person.set('MemberStatus', '2');
                 person.save().then(function (personData) {
-                    res.json({ verification: 'true', errMsg: errMsg });
+                    res.json({ verification: 'true', errMsg: '审核通过。' });
                 }, function (error)
                 {
                     //审核失败。
-                    var errMsg = err.code + ':' + err.message;
+                    var errMsg = error.code + ':' + error.message;
                     errMsg = '审核失败。(' + errMsg + ")";
                     console.log(errMsg);
                     res.json({ operation:'pass', verification: 'false', errMsg: errMsg });
@@ -77,25 +77,28 @@ router.post('/', function (req, res, next) {
     }
     if (vote == 'detail') {
         //查看详细信息
-        //审核
+        console.log('vote:detail');
         if (userId != null && userId != '') {
             var query = new AV.Query('_User');
             query.get(userId).then(function (userData) {
                 // 成功获得实例
                 // data 就是 id 为 57328ca079bc44005c2472d0 的 Todo 对象实例
                 var person = userData;
-                res.json({ operation: 'detail', detailData: person, errMsg: errMsg });
+                console.log('person:' + person);
+                res.json({ operation: 'detail', detailData: person, errMsg: '获取信息成功。' });
 
             }, function (error) {
                 // 失败了
-
-            });
+                console.log('error in detail.');
+            }).catch(next);
         }
     }
     if (vote == 'sendSMS') {
         //发送短信
         var cellphoneNums = req.body.inputCellphoneNums;
         var smsContent = req.body.inputSMSContent;
+
+
 
     }
 
